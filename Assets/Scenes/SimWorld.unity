@@ -243,7 +243,7 @@ MonoBehaviour:
   throttle: 0
   maxPitch: 30
   maxRoll: 30
-  yawPower: 4
+  yawPower: 30
 --- !u!54 &591526386
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -857,6 +857,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1955691654}
   - component: {fileID: 1955691653}
+  - component: {fileID: 1955691656}
+  - component: {fileID: 1955691655}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -893,6 +895,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1955691655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955691652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e120188e851b6f44b85f38aecc703ba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1955691656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955691652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7acef0b79454c9b4dae3f8139bc4ba77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RosIPAddress: 127.0.0.1
+  m_RosPort: 10000
+  m_ConnectOnStart: 1
+  m_KeepaliveTime: 1
+  m_NetworkTimeoutSeconds: 2
+  m_SleepTimeSeconds: 0.01
+  m_ShowHUD: 1
+  m_TFTopics:
+  - /tf
+  listenForTFMessages: 1
 --- !u!1 &1977517230 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -342652165937629919, guid: dfa74efb8f7c6f745b536da1bd99a0a6, type: 3}
