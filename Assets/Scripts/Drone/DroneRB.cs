@@ -21,7 +21,7 @@ public class DroneRB : MonoBehaviour
     private float finalPitch = 0f;
     private float finalRoll = 0f;
     private float finalYaw = 0f;
-    public float lerpSpeed = 1f;
+    const float lerpSpeed = 1f;
 
     const float lbsToKg = 0.454f;
 
@@ -68,15 +68,48 @@ public class DroneRB : MonoBehaviour
 
     void HandleControls()
     {
-        pitch = controller.cyclic.x * controller.maxPitch;
-        roll = controller.cyclic.y * controller.maxRoll;
-        yaw += controller.pedals * controller.yawPower * Time.deltaTime;
+        if (controller.controlType == ControlType.AssistON)
+        {
+            if (controller.cyclic.x != 0f)
+            {
+                pitch += controller.cyclic.x * controller.pitchSpeed * Time.deltaTime;
+            }
+            else
+            {
+                pitch = 0f;
+            }
+            if (controller.cyclic.y != 0f)
+            {
+                roll += controller.cyclic.y * controller.rollSpeed * Time.deltaTime;
+            }
+            else
+            {
+                roll = 0f;
+            }
+            yaw += controller.pedals * controller.yawSpeed * Time.deltaTime;
 
-        finalPitch = Mathf.Lerp(finalPitch, pitch, Time.deltaTime * lerpSpeed);
-        finalRoll = Mathf.Lerp(finalRoll, roll, Time.deltaTime * lerpSpeed);
-        finalYaw = Mathf.Lerp(finalYaw, yaw, Time.deltaTime * lerpSpeed);
+            pitch = Mathf.Clamp(pitch, -controller.maxPitch, controller.maxPitch);
+            roll = Mathf.Clamp(roll, -controller.maxRoll, controller.maxRoll);
 
-        Quaternion rot = Quaternion.Euler(finalPitch, finalYaw, finalRoll);
-        rb.MoveRotation(rot);
+            finalPitch = Mathf.Lerp(finalPitch, pitch, Time.deltaTime * lerpSpeed);
+            finalRoll = Mathf.Lerp(finalRoll, roll, Time.deltaTime * lerpSpeed);
+            finalYaw = Mathf.Lerp(finalYaw, yaw, Time.deltaTime * lerpSpeed);
+
+            Quaternion rot = Quaternion.Euler(finalPitch, finalYaw, finalRoll);
+            rb.MoveRotation(rot);
+        }
+        else
+        {
+            pitch += controller.cyclic.x * controller.pitchSpeed * Time.deltaTime;
+            roll += controller.cyclic.y * controller.rollSpeed * Time.deltaTime;
+            yaw += controller.pedals * controller.yawSpeed * Time.deltaTime;
+
+            finalPitch = Mathf.Lerp(finalPitch, pitch, Time.deltaTime * lerpSpeed);
+            finalRoll = Mathf.Lerp(finalRoll, roll, Time.deltaTime * lerpSpeed);
+            finalYaw = Mathf.Lerp(finalYaw, yaw, Time.deltaTime * lerpSpeed);
+
+            Quaternion rot = Quaternion.Euler(finalPitch, finalYaw, finalRoll);
+            rb.MoveRotation(rot);
+        }
     }
 }

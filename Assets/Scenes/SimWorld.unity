@@ -156,6 +156,7 @@ MonoBehaviour:
   maxPower: 0.075
   propeller: {fileID: 1653706567}
   maxPropellerRPM: 28000
+  counterClockwise: 1
 --- !u!4 &285311077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dfa74efb8f7c6f745b536da1bd99a0a6, type: 3}
@@ -225,7 +226,6 @@ MonoBehaviour:
   pitch: 0
   roll: 0
   yaw: 0
-  lerpSpeed: 1
 --- !u!114 &591526385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,9 +241,12 @@ MonoBehaviour:
   cyclic: {x: 0, y: 0}
   pedals: 0
   throttle: 0
+  yawSpeed: 30
+  pitchSpeed: 30
+  rollSpeed: 30
+  controlType: 0
   maxPitch: 30
   maxRoll: 30
-  yawPower: 30
 --- !u!54 &591526386
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -643,6 +646,7 @@ MonoBehaviour:
   maxPower: 0.075
   propeller: {fileID: 615756704}
   maxPropellerRPM: 28000
+  counterClockwise: 1
 --- !u!65 &1441701168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -774,7 +778,6 @@ MonoBehaviour:
   pitch: 0
   roll: 0
   yaw: 0
-  lerpSpeed: 1
 --- !u!54 &1482262014
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -806,9 +809,12 @@ MonoBehaviour:
   cyclic: {x: 0, y: 0}
   pedals: 0
   throttle: 0
+  yawSpeed: 15
+  pitchSpeed: 5
+  rollSpeed: 5
+  controlType: 0
   maxPitch: 30
   maxRoll: 30
-  yawPower: 4
 --- !u!4 &1653706567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4694720829249445180, guid: dfa74efb8f7c6f745b536da1bd99a0a6, type: 3}
@@ -847,6 +853,7 @@ MonoBehaviour:
   maxPower: 0.075
   propeller: {fileID: 1350024014}
   maxPropellerRPM: 28000
+  counterClockwise: 0
 --- !u!1 &1955691652
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,6 +969,7 @@ MonoBehaviour:
   maxPower: 0.075
   propeller: {fileID: 413067556}
   maxPropellerRPM: 28000
+  counterClockwise: 0
 --- !u!1001 &2138245611
 PrefabInstance:
   m_ObjectHideFlags: 0

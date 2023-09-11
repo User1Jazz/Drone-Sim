@@ -8,6 +8,7 @@ public class DroneMotor : MonoBehaviour
     public float maxPower = 0.075f;     // Power(Thrust?) to weight ratio
     public Transform propeller;
     public float maxPropellerRPM = 20000f;
+    public bool counterClockwise = false;
 
     public void UpdateMotor(Rigidbody rb, float throttle, int totalNumberOfMotors)
     {
@@ -32,6 +33,13 @@ public class DroneMotor : MonoBehaviour
             Debug.LogError(gameObject.name + ": propeller not assigned to DroneMotor script");
             return;
         }
-        propeller.Rotate(Vector3.forward, maxPropellerRPM * rotationRate);
+        if (!counterClockwise)
+        {
+            propeller.Rotate(Vector3.forward, maxPropellerRPM * rotationRate);
+        }
+        else
+        {
+            propeller.Rotate(Vector3.forward, -maxPropellerRPM * rotationRate);
+        }
     }
 }
