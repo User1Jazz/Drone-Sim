@@ -76,7 +76,7 @@ public class DroneRB : MonoBehaviour
             }
             else
             {
-                pitch = 0f;
+                pitch = Mathf.MoveTowards(pitch, 0f, controller.pitchSpeed * Time.deltaTime);
             }
             if (controller.cyclic.y != 0f)
             {
@@ -84,7 +84,7 @@ public class DroneRB : MonoBehaviour
             }
             else
             {
-                roll = 0f;
+                roll = Mathf.MoveTowards(roll, 0f, controller.rollSpeed * Time.deltaTime);
             }
             yaw += controller.pedals * controller.yawSpeed * Time.deltaTime;
 
