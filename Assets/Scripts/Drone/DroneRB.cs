@@ -100,16 +100,33 @@ public class DroneRB : MonoBehaviour
         }
         else
         {
-            pitch += controller.cyclic.x * controller.pitchSpeed * Time.deltaTime;
+            /*pitch += controller.cyclic.x * controller.pitchSpeed * Time.deltaTime;
             roll += controller.cyclic.y * controller.rollSpeed * Time.deltaTime;
-            yaw += controller.pedals * controller.yawSpeed * Time.deltaTime;
+            yaw += controller.pedals * controller.yawSpeed * Time.deltaTime;*/
+
+            /*finalPitch = Mathf.Lerp(finalPitch, pitch, Time.deltaTime * lerpSpeed);
+            finalRoll = Mathf.Lerp(finalRoll, roll, Time.deltaTime * lerpSpeed);
+            finalYaw = Mathf.Lerp(finalYaw, yaw, Time.deltaTime * lerpSpeed);*/
+
+            //Quaternion rot = Quaternion.Euler(rb.rotation * new Vector3(finalPitch, finalYaw, finalRoll));
+
+            // Calculate pitch, roll, and yaw changes based on controller inputs
+            pitch = controller.cyclic.x * controller.pitchSpeed * Time.deltaTime;
+            roll = controller.cyclic.y * controller.rollSpeed * Time.deltaTime;
+            yaw = controller.pedals * controller.yawSpeed * Time.deltaTime;
 
             finalPitch = Mathf.Lerp(finalPitch, pitch, Time.deltaTime * lerpSpeed);
             finalRoll = Mathf.Lerp(finalRoll, roll, Time.deltaTime * lerpSpeed);
             finalYaw = Mathf.Lerp(finalYaw, yaw, Time.deltaTime * lerpSpeed);
 
-            Quaternion rot = Quaternion.Euler(finalPitch, finalYaw, finalRoll);
-            rb.MoveRotation(rot);
+            // Create quaternions for each individual rotation
+            Quaternion pitchRotation = Quaternion.Euler(finalPitch, 0, 0);
+            Quaternion rollRotation = Quaternion.Euler(0, finalYaw, 0);
+            Quaternion yawRotation = Quaternion.Euler(0, 0, finalRoll);
+
+            // Apply the rotations sequentially, considering the object's current rotation
+            rb.MoveRotation(rb.rotation * yawRotation * pitchRotation * rollRotation);
+            //rb.MoveRotation(rot);
         }
     }
 }
