@@ -5,9 +5,10 @@ using UnityEngine.EventSystems;
 
 public class WorldEditor : MonoBehaviour
 {
-    List<WorldObject> objects;
-    public GameObject selectedObject;
-    public Camera cam;
+    List<WorldObject> objects;              // List of objects that are present in the world
+    List<GameObject> gameObjects;            // List of gameobjects
+    public GameObject selectedObject;       // Selected gameobject
+    public Camera cam;                      // Reference to the camera
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +24,11 @@ public class WorldEditor : MonoBehaviour
 
     #region editor functions
 
-    public void AddObject(GameObject newObject)
+    // Function that adds an object to the object list and creates the gameobject based on the object data; New gameobject is set as the selected object
+    public void AddObject(WorldObject newObject)
     {
-        objects.Add(newObject.GetComponent<WorldObject>());
-        Instantiate(newObject, GetRayHitPoint(), Quaternion.identity);
-        selectedObject = newObject;
+        objects.Add(newObject);                         // Add object to the list
+        selectedObject = CreateGameObject(newObject);   // Create the gameobject and set it as a selected object
     }
 
     public void DeleteSelectedObject()
@@ -110,6 +111,19 @@ public class WorldEditor : MonoBehaviour
         {
             return (cam.transform.position + cam.transform.forward);
         }
+    }
+
+    public int GetObjectListCount()
+    {
+        return objects.Count;
+    }
+
+    public GameObject CreateGameObject(WorldObject newObject)
+    {
+        GameObject newGameObject = new GameObject(newObject.objectName, typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider));
+        newGameObject.GetComponent<Renderer>().material = newObject.material;
+        Instantiate(newGameObject, GetRayHitPoint(), Quaternion.identity);
+        return newGameObject;
     }
 
     #endregion
