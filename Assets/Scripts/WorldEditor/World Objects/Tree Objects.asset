@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7a16d0bc53a1492bb43ad71301a4a2e, type: 3}
-  m_Name: LaserScanVisualizerSettings
+  m_Script: {fileID: 11500000, guid: da87a5d6687e5a84da8a85183dd17982, type: 3}
+  m_Name: Tree Objects
   m_EditorClassIdentifier: 
-  m_TFTrackingSettings:
-    type: 1
-    tfTopic: /tf
-  m_UseIntensitySize: 0
-  m_PointRadius: 0.1
-  m_MaxIntensity: 100
-  m_ColorMode: 2
+  listDescription: List of Tree Objects
+  objectList: []
