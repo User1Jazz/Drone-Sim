@@ -2701,7 +2701,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3061,8 +3061,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 350598429}
   m_HandleRect: {fileID: 350598428}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.2422644
+  m_Value: 1.000002
+  m_Size: 0.8533469
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4369,7 +4369,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 854937438}
   m_HandleRect: {fileID: 854937437}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.9999991
   m_Size: 0.8824666
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4822,7 +4822,7 @@ Terrain:
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1

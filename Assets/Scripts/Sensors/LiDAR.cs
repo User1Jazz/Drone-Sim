@@ -144,7 +144,7 @@ public class LiDAR : Vision
         }
         catch (Exception e)
         {
-
+            Debug.LogError(e.Message);
         }
     }
 
