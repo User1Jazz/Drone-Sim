@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
 public class VirtualCamera : MonoBehaviour
 {
-    Camera cam;
+    public Camera cam;
 
     Texture2D texture;
     RenderTexture renderTexture;
@@ -14,14 +13,12 @@ public class VirtualCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = gameObject.GetComponent<Camera>();
         // Make sure the camera is rendering to the Render Texture
         renderTexture = new RenderTexture(256, 256, 16, RenderTextureFormat.ARGB32);
         cam.targetTexture = renderTexture;
     }
 
-    // Update is called once per frame
-    void Update()
+    public byte[] GetImage()
     {
         // You can make a Camera render to a RenderTexture using Camera.targetTexture
         // Then, you can convert your RenderTexture into a Texture2D
@@ -32,6 +29,15 @@ public class VirtualCamera : MonoBehaviour
         pixels = new List<Color>(texture.GetPixels());
         Debug.Log("Pixel 0: R: " + pixels[0].r + ", G: " + pixels[0].g + ", B: " + pixels[0].b);*/
 
+        Texture2D screenShot = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
+        RenderTexture.active = renderTexture;
+        screenShot.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+        RenderTexture.active = null;
+        return screenShot.EncodeToJPG();
+    }
+
+    public void TakeScreenshot()
+    {
         if (Input.GetKeyDown(KeyCode.C))
         {
             // Create a new texture to read the pixels into

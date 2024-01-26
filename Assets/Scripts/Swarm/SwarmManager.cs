@@ -11,6 +11,8 @@ public class SwarmManager : MonoBehaviour
     public bool deploySwarmOnStart = true;
     public float deployOffset = 0.1f;
 
+    public bool manualControl = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,12 +59,16 @@ public class SwarmManager : MonoBehaviour
 
         drone.name = droneID;
 
-        drone.GetComponent<CameraTestPublisher>().topicName = "/" + droneID + "/cam";
+        drone.GetComponent<DroneSensorsNode>().topicName = "/" + droneID + "/data";
         drone.GetComponent<DroneControlNode>().topicName = "/" + droneID + "/control";
+        drone.GetComponent<ManualControlNode>().topicName = "/" + droneID + "/control";
+        drone.GetComponent<ManualControlNode>().manualMode = manualControl;
 
-        drone.GetComponent<CameraTestPublisher>().Init();
+        drone.GetComponent<DroneSensorsNode>().Init();
         drone.GetComponent<DroneControlNode>().Init();
-        
+        drone.GetComponent<ManualControlNode>().Init();
+
+
         return drone;
     }
 }

@@ -6,18 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class DroneController : MonoBehaviour
 {
-    public Vector2 cyclic;                                         // Pitch and roll
-    public float pedals;                                           // Yaw
-    
+    public Vector3 linear;                                          // X => Forward/Backward,   Y =>Left/Right,     Z => Up/Down
+    public Vector3 angular;                                         // X => Roll,               Y => Pitch,         Z => Yaw (turn left/right)
+
     [Tooltip("Yaw Speed (Deg/s)")] public float yawSpeed = 15f;    // Yaw power
     [Tooltip("Pitch Speed (m/s)")] public float pitchSpeed = 15f;  // Pitch speed (deg/sec)
     [Tooltip("Roll Speed (m/s)")] public float rollSpeed = 15f;    // Max roll (deg/sec)
 
     Rigidbody rb;
     public float motorPower = 5f;
-    public float throttle;                                         // Throttle (vertical force)
-
-    //[Header("Assist OFF Parameters")]
 
     void Start()
     {
@@ -28,73 +25,10 @@ public class DroneController : MonoBehaviour
     {
         Hover();
 
-        Throttle(throttle * motorPower);
-        Nick(pitchSpeed * cyclic.x);
-        Roll(rollSpeed * cyclic.y);
-        Yaw(yawSpeed * pedals);
-    }
-
-    void Update()
-    {
-        HandleManualInput();
-    }
-
-    void  HandleManualInput()
-    {
-        //cyclic.x = Input.GetAxis("Vertical");
-        //cyclic.y = -Input.GetAxis("Horizontal");
-
-        if (Input.GetKey("w"))
-        {
-            cyclic.x = 1f;
-        }
-        if (Input.GetKey("s"))
-        {
-            cyclic.x = -1f;
-        }
-        if (Input.GetKeyUp("w") || Input.GetKeyUp("s"))
-        {
-            cyclic.x = 0f;
-        }
-
-        if (Input.GetKey("a"))
-        {
-            cyclic.y = 1f;
-        }
-        if (Input.GetKey("d"))
-        {
-            cyclic.y = -1f;
-        }
-        if (Input.GetKeyUp("a") || Input.GetKeyUp("d"))
-        {
-            cyclic.y = 0f;
-        }
-
-        if (Input.GetKey("q"))
-        {
-            pedals = -1f;
-        }
-        if (Input.GetKey("e"))
-        {
-            pedals = 1f;
-        }
-        if(Input.GetKeyUp("q") || Input.GetKeyUp("e"))
-        {
-            pedals = 0f;
-        }
-
-        if (Input.GetKey("r"))
-        {
-            throttle = 1f;
-        }
-        if (Input.GetKey("f"))
-        {
-            throttle = -1f;
-        }
-        if (Input.GetKeyUp("r") || Input.GetKeyUp("f"))
-        {
-            throttle = 0f;
-        }
+        Throttle(linear.z * motorPower);
+        Nick(pitchSpeed * linear.x);
+        Roll(rollSpeed * linear.y);
+        Yaw(yawSpeed * angular.z);
     }
 
     void Hover()

@@ -1,20 +1,25 @@
 using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
-using RosMessageTypes.Geometry;
+using RosMessageTypes.DroneSimMessages;
 
 public class DroneControlNode : MonoBehaviour
 {
     public DroneController droneControllerScript;
-    public string topicName = "/control";
+    public string topicName = "/D#/control";
 
     public void Init()
     {
-        ROSConnection.GetOrCreateInstance().Subscribe<TwistMsg>(topicName, ListenerFunction);
+        ROSConnection.GetOrCreateInstance().Subscribe<Drone_ControlMsg>(topicName, ListenerFunction);
     }
 
-    void ListenerFunction(TwistMsg message)
+    void ListenerFunction(Drone_ControlMsg message)
     {
-        Debug.Log(message.linear);
-        Debug.Log(message.angular);
+        droneControllerScript.linear.x = (float)message.twist.linear.x;     // Forward/Backward
+        droneControllerScript.linear.y = (float)message.twist.linear.y;     // Left/Right
+        droneControllerScript.linear.z = (float)message.twist.linear.z;     // Up/Down
+
+        droneControllerScript.angular.x = (float)message.twist.angular.x;   // Roll
+        droneControllerScript.angular.y = (float)message.twist.angular.y;   // Pitch
+        droneControllerScript.angular.z = (float)message.twist.angular.z;   // Yaw (turn left/right)
     }
 }
