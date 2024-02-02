@@ -17,11 +17,16 @@ public class DroneSensorsNode : MonoBehaviour
     public IMU imu;                                     // Reference to the IMU Script
     public IR ir;                                       // Reference to the IR Script
     public VirtualCamera droneCam;                      // Reference to the camera script
+	
+	[SerializeField] bool initializeOnStart = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+		if(initializeOnStart)
+		{
+			Init();
+		}
     }
 
     // Update is called once per frame
@@ -40,13 +45,12 @@ public class DroneSensorsNode : MonoBehaviour
     public void Init()
     {
         ros = ROSConnection.GetOrCreateInstance();
-        ros.RegisterPublisher<Drone_SensorsMsg>(topicName);
+        ros.RegisterPublisher<DroneSensorsMsg>(topicName);
     }
 
     void PublishData()
     {
-        Drone_SensorsMsg message = new Drone_SensorsMsg(
-            new HeaderMsg(),
+        DroneSensorsMsg message = new DroneSensorsMsg(
             droneCam.GetImage(),
             ir.value,
             new QuaternionMsg(imu.orientation.x, imu.orientation.y, imu.orientation.z, imu.orientation.w),

@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_ShowHUD: 1
   m_TFTopics:
   - /tf
-  listenForTFMessages: 0
+  listenForTFMessages: 1
 --- !u!114 &1955691657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,7 +1038,7 @@ MonoBehaviour:
   dronePrefab: {fileID: 8094375305740979242, guid: ecf8865475c750f4393c19750c53194b, type: 3}
   deploySwarmOnStart: 1
   deployOffset: 0.05
-  manualControl: 1
+  manualControl: 0
 --- !u!1001 &511841081801827677
 PrefabInstance:
   m_ObjectHideFlags: 0

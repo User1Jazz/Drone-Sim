@@ -4,18 +4,16 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using Unity.Robotics.ROSTCPConnector.MessageGeneration;
-using RosMessageTypes.Std;
 
 namespace RosMessageTypes.DroneSimMessages
 {
     [Serializable]
-    public class Drone_SensorsMsg : Message
+    public class DroneSensorsMsg : Message
     {
-        public const string k_RosMessageName = "drone_sim_messages/Drone_Sensors";
+        public const string k_RosMessageName = "drone_sim_messages/DroneSensors";
         public override string RosMessageName => k_RosMessageName;
 
         //  Drone Sensor Data
-        public HeaderMsg header;
         //  Camera data
         public byte[] camera_image;
         //  Compressed image buffer
@@ -28,9 +26,8 @@ namespace RosMessageTypes.DroneSimMessages
         public Geometry.Vector3Msg angular_velocity;
         public Geometry.Vector3Msg linear_acceleration;
 
-        public Drone_SensorsMsg()
+        public DroneSensorsMsg()
         {
-            this.header = new HeaderMsg();
             this.camera_image = new byte[0];
             this.height = 0.0f;
             this.orientation = new Geometry.QuaternionMsg();
@@ -38,9 +35,8 @@ namespace RosMessageTypes.DroneSimMessages
             this.linear_acceleration = new Geometry.Vector3Msg();
         }
 
-        public Drone_SensorsMsg(HeaderMsg header, byte[] camera_image, float height, Geometry.QuaternionMsg orientation, Geometry.Vector3Msg angular_velocity, Geometry.Vector3Msg linear_acceleration)
+        public DroneSensorsMsg(byte[] camera_image, float height, Geometry.QuaternionMsg orientation, Geometry.Vector3Msg angular_velocity, Geometry.Vector3Msg linear_acceleration)
         {
-            this.header = header;
             this.camera_image = camera_image;
             this.height = height;
             this.orientation = orientation;
@@ -48,11 +44,10 @@ namespace RosMessageTypes.DroneSimMessages
             this.linear_acceleration = linear_acceleration;
         }
 
-        public static Drone_SensorsMsg Deserialize(MessageDeserializer deserializer) => new Drone_SensorsMsg(deserializer);
+        public static DroneSensorsMsg Deserialize(MessageDeserializer deserializer) => new DroneSensorsMsg(deserializer);
 
-        private Drone_SensorsMsg(MessageDeserializer deserializer)
+        private DroneSensorsMsg(MessageDeserializer deserializer)
         {
-            this.header = HeaderMsg.Deserialize(deserializer);
             deserializer.Read(out this.camera_image, sizeof(byte), deserializer.ReadLength());
             deserializer.Read(out this.height);
             this.orientation = Geometry.QuaternionMsg.Deserialize(deserializer);
@@ -62,7 +57,6 @@ namespace RosMessageTypes.DroneSimMessages
 
         public override void SerializeTo(MessageSerializer serializer)
         {
-            serializer.Write(this.header);
             serializer.WriteLength(this.camera_image);
             serializer.Write(this.camera_image);
             serializer.Write(this.height);
@@ -73,8 +67,7 @@ namespace RosMessageTypes.DroneSimMessages
 
         public override string ToString()
         {
-            return "Drone_SensorsMsg: " +
-            "\nheader: " + header.ToString() +
+            return "DroneSensorsMsg: " +
             "\ncamera_image: " + System.String.Join(", ", camera_image.ToList()) +
             "\nheight: " + height.ToString() +
             "\norientation: " + orientation.ToString() +

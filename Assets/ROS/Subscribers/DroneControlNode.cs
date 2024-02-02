@@ -6,13 +6,23 @@ public class DroneControlNode : MonoBehaviour
 {
     public DroneController droneControllerScript;
     public string topicName = "/D#/control";
+	
+	[SerializeField] bool initializeOnStart = false;
+	
+	void Start()
+	{
+		if(initializeOnStart)
+		{
+			Init();
+		}
+	}
 
     public void Init()
     {
-        ROSConnection.GetOrCreateInstance().Subscribe<Drone_ControlMsg>(topicName, ListenerFunction);
+        ROSConnection.GetOrCreateInstance().Subscribe<DroneControlMsg>(topicName, ListenerFunction);
     }
 
-    void ListenerFunction(Drone_ControlMsg message)
+    void ListenerFunction(DroneControlMsg message)
     {
         droneControllerScript.linear.x = (float)message.twist.linear.x;     // Forward/Backward
         droneControllerScript.linear.y = (float)message.twist.linear.y;     // Left/Right

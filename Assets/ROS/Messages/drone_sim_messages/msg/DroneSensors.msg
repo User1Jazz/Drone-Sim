@@ -1,7 +1,5 @@
 # Drone Sensor Data
 
-Header header
-
 # Camera data
 uint8[] camera_image # Compressed image buffer
 

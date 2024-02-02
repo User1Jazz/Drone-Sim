@@ -4,18 +4,16 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using Unity.Robotics.ROSTCPConnector.MessageGeneration;
-using RosMessageTypes.Std;
 
 namespace RosMessageTypes.DroneSimMessages
 {
     [Serializable]
-    public class Drone_ControlMsg : Message
+    public class DroneControlMsg : Message
     {
-        public const string k_RosMessageName = "drone_sim_messages/Drone_Control";
+        public const string k_RosMessageName = "drone_sim_messages/DroneControl";
         public override string RosMessageName => k_RosMessageName;
 
         //  ROS2 Message for Drone Control
-        public HeaderMsg header;
         public Geometry.TwistMsg twist;
         //  Description below is the definition of the twist message
         //    Vector3 linear
@@ -27,36 +25,31 @@ namespace RosMessageTypes.DroneSimMessages
         //     float64 y  # Pitch
         //     float64 z  # Yaw (Yaw left/Yaw right)
 
-        public Drone_ControlMsg()
+        public DroneControlMsg()
         {
-            this.header = new HeaderMsg();
             this.twist = new Geometry.TwistMsg();
         }
 
-        public Drone_ControlMsg(HeaderMsg header, Geometry.TwistMsg twist)
+        public DroneControlMsg(Geometry.TwistMsg twist)
         {
-            this.header = header;
             this.twist = twist;
         }
 
-        public static Drone_ControlMsg Deserialize(MessageDeserializer deserializer) => new Drone_ControlMsg(deserializer);
+        public static DroneControlMsg Deserialize(MessageDeserializer deserializer) => new DroneControlMsg(deserializer);
 
-        private Drone_ControlMsg(MessageDeserializer deserializer)
+        private DroneControlMsg(MessageDeserializer deserializer)
         {
-            this.header = HeaderMsg.Deserialize(deserializer);
             this.twist = Geometry.TwistMsg.Deserialize(deserializer);
         }
 
         public override void SerializeTo(MessageSerializer serializer)
         {
-            serializer.Write(this.header);
             serializer.Write(this.twist);
         }
 
         public override string ToString()
         {
-            return "Drone_ControlMsg: " +
-            "\nheader: " + header.ToString() +
+            return "DroneControlMsg: " +
             "\ntwist: " + twist.ToString();
         }
 

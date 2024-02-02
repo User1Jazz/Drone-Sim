@@ -17,11 +17,21 @@ public class ManualControlNode : MonoBehaviour
     public bool started = false;
     Vector3 linear = Vector3.zero;
     Vector3 angular = Vector3.zero;
-
+	
+	[SerializeField] bool initializeOnStart = false;
+	
+	void Start()
+	{
+		if(initializeOnStart)
+		{
+			Init();
+		}
+	}
+	
     public void Init()
     {
         ros = ROSConnection.GetOrCreateInstance();
-        ros.RegisterPublisher<Drone_SensorsMsg>(topicName);
+        ros.RegisterPublisher<DroneControlMsg>(topicName);
         started = true;
     }
 
@@ -105,8 +115,7 @@ public class ManualControlNode : MonoBehaviour
         TwistMsg twister = new TwistMsg(
             new Vector3Msg(linear.x, linear.y, linear.z), new Vector3Msg(angular.x, angular.y, angular.z)
             );
-        Drone_ControlMsg message = new Drone_ControlMsg(
-            new HeaderMsg(),
+        DroneControlMsg message = new DroneControlMsg(
             twister
             );
         ros.Publish(topicName, message);

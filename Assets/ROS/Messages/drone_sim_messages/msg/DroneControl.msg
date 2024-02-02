@@ -1,5 +1,4 @@
 # ROS2 Message for Drone Control
-Header header
 geometry_msgs/Twist twist
 
 # Description below is the definition of the twist message
