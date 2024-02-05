@@ -61,11 +61,13 @@ public class SwarmManager : MonoBehaviour
 
         drone.GetComponent<DroneSensorsNode>().topicName = "/" + droneID + "/data";
         drone.GetComponent<DroneControlNode>().topicName = "/" + droneID + "/cmd";
+		drone.GetComponent<RewardPublisher>().topicName = "/" + droneID + "/reward";
         drone.GetComponent<ManualControlNode>().topicName = "/" + droneID + "/cmd";
         drone.GetComponent<ManualControlNode>().manualMode = manualControl;
 
         drone.GetComponent<DroneSensorsNode>().Init();
         drone.GetComponent<DroneControlNode>().Init();
+		drone.GetComponent<RewardPublisher>().Init();
         drone.GetComponent<ManualControlNode>().Init();
 
 

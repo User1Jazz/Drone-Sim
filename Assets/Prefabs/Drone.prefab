@@ -157,7 +157,9 @@ GameObject:
   - component: {fileID: 1221578946994107643}
   - component: {fileID: 3391125806404709752}
   - component: {fileID: 2740525799620944796}
+  - component: {fileID: 5338470859072853454}
   - component: {fileID: 3576977860219999105}
+  - component: {fileID: 8377244053573608500}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -242,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droneControllerScript: {fileID: 8094375305740979248}
   topicName: /D#/control
+  initializeOnStart: 0
 --- !u!114 &968146912053103772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +310,24 @@ MonoBehaviour:
   imu: {fileID: 3391125806404709752}
   ir: {fileID: 968146912053103772}
   droneCam: {fileID: 1221578946994107643}
+  initializeOnStart: 0
+--- !u!114 &5338470859072853454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094375305740979242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455261fff32cdfb4e89067264155331f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topicName: /D#/reward
+  publishMessageFrequency: 0.05
+  initializeOnStart: 0
+  reward: 0
+  rewardCalc: {fileID: 8377244053573608500}
 --- !u!114 &3576977860219999105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +344,30 @@ MonoBehaviour:
   publishMessageFrequency: 0.001
   manualMode: 1
   started: 0
+  initializeOnStart: 0
+--- !u!114 &8377244053573608500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094375305740979242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576432d87bb24434f82e07fb77cebb80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosMin: {x: -25, y: 5, z: -25}
+  targetPosMax: {x: 25, y: 25, z: 25}
+  generateTargetOnStart: 1
+  randomlyGenerateTargets: 1
+  successRadius: 2
+  successReward: -100
+  failureReward: 100
+  episodeLifetime: 60
+  targetPosition: {x: 0, y: 0, z: 0}
+  timeRemaining: 0
+  episodeOver: 0
 --- !u!1001 &8094375304867380266
 PrefabInstance:
   m_ObjectHideFlags: 0

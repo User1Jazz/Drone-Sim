@@ -29,7 +29,7 @@ public class IMU : MonoBehaviour
         acceleration = rb.velocity; // Linear acceleration in units per second squared
 
         // Calculate orientation quaternion based on the Rigidbody's rotation
-        Quaternion orientation = transform.rotation;
+        orientation = transform.rotation;
 
         // Set covariance matrices (adjust these based on your simulation)
         angular_velocity_covariance = new float[9];

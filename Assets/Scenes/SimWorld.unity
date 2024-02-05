@@ -1034,11 +1034,11 @@ MonoBehaviour:
   - {fileID: 1927341386}
   - {fileID: 134960780}
   - {fileID: 106473098}
-  swarmSize: 3
+  swarmSize: 1
   dronePrefab: {fileID: 8094375305740979242, guid: ecf8865475c750f4393c19750c53194b, type: 3}
   deploySwarmOnStart: 1
   deployOffset: 0.05
-  manualControl: 0
+  manualControl: 1
 --- !u!1001 &511841081801827677
 PrefabInstance:
   m_ObjectHideFlags: 0
