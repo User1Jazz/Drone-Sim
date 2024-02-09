@@ -10,6 +10,7 @@ public class SwarmManager : MonoBehaviour
     public GameObject dronePrefab;
     public bool deploySwarmOnStart = true;
     public float deployOffset = 0.1f;
+	public List<Transform> targets;
 
     public bool manualControl = false;
 
@@ -62,15 +63,47 @@ public class SwarmManager : MonoBehaviour
         drone.GetComponent<DroneSensorsNode>().topicName = "/" + droneID + "/data";
         drone.GetComponent<DroneControlNode>().topicName = "/" + droneID + "/cmd";
 		drone.GetComponent<RewardPublisher>().topicName = "/" + droneID + "/reward";
+		drone.GetComponent<DroneTargetPublisher>().topicName = "/" + droneID + "/target";
         drone.GetComponent<ManualControlNode>().topicName = "/" + droneID + "/cmd";
         drone.GetComponent<ManualControlNode>().manualMode = manualControl;
+		
+		if(targets.Count > 0)
+		{
+			Transform tgt = RequestNextTarget();
+			drone.GetComponent<DroneTargetPublisher>().targetPosition = tgt.position;
+			drone.GetComponent<RewardCalculator>().swarmManager = this;
+			drone.GetComponent<RewardCalculator>().generateTargetOnStart = false;
+			drone.GetComponent<RewardCalculator>().targetPosition = tgt.position;
+		}
 
         drone.GetComponent<DroneSensorsNode>().Init();
         drone.GetComponent<DroneControlNode>().Init();
 		drone.GetComponent<RewardPublisher>().Init();
+		drone.GetComponent<DroneTargetPublisher>().Init();
         drone.GetComponent<ManualControlNode>().Init();
 
 
         return drone;
+    }
+	
+	public Transform RequestNextTarget()
+	{
+		return targets[Random.Range(0,targets.Count-1)];
+	}
+	
+	void OnDrawGizmos()
+    {
+		if(targets.Count > 0)
+		{
+			foreach(Transform target in targets)
+			{
+				if(target != null)
+				{
+					// Draw a yellow sphere at the transform's position
+					Gizmos.color = Color.yellow;
+					Gizmos.DrawSphere(target.position, 0.1f);
+				}
+			}			
+		}
     }
 }

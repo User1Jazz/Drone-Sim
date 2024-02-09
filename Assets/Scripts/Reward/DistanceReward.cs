@@ -4,34 +4,7 @@ using UnityEngine;
 
 public class DistanceReward : RewardCalculator
 {
-	// Target position hyperparameters
-	public Vector3 targetPosMin = new Vector3(-100f, 5f, -100f);
-	public Vector3 targetPosMax = new Vector3(100f, 100f, 100f);
-	public bool generateTargetOnStart = true;
-	public bool randomlyGenerateTargets = false;
 	public float successRadius = 2f;
-	public float successReward = -100f;
-	public float failureReward = 100f;
-	public float episodeLifetime = 60f;
-	public float gainTimeOnSuccess = 1f;
-	
-	
-	// Runtime parameters
-	public Vector3 targetPosition;
-	Vector3 startPos;
-	public float timeRemaining;
-	public bool episodeOver = false;
-	
-	// Called on first frame update
-	void Start()
-	{
-		timeRemaining = episodeLifetime;
-		startPos = transform.position;
-		if(generateTargetOnStart)
-		{
-			SetTargetPosition();
-		}
-	}
 	
 	// Called every frame update
 	void Update()
@@ -44,12 +17,6 @@ public class DistanceReward : RewardCalculator
 			timeRemaining += gainTimeOnSuccess;
 			SetTargetPosition();
 		}
-	}
-	
-	// Function to set the target position
-	public void SetTargetPosition()
-	{
-		targetPosition = new Vector3(startPos.x + Random.Range(targetPosMin.x, targetPosMax.x), startPos.y + Random.Range(targetPosMin.y, targetPosMax.y), startPos.z + Random.Range(targetPosMin.z, targetPosMax.z));
 	}
 	
 	// Function to calculate the reward
@@ -67,7 +34,7 @@ public class DistanceReward : RewardCalculator
 		}
 	}
 	
-	void OnDrawGizmos()
+	public override void OnDrawGizmos()
     {
 		if(targetPosition != null)
 		{
