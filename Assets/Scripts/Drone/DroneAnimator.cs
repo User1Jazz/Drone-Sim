@@ -36,7 +36,7 @@ public class DroneAnimator : MonoBehaviour
         tiltAmountForward = Mathf.SmoothDamp(tiltAmountForward, droneMainTransform.eulerAngles.x + 20 * droneControllerScript.linear.x, ref tiltVelocityForward, 0.1f);     // Calculate forward tilt
         tiltAmountRight = Mathf.SmoothDamp(tiltAmountRight, droneMainTransform.eulerAngles.z + 20 * droneControllerScript.linear.y, ref tiltVelocityRight, 0.1f);           // Calculate side tilt
 
-        yAxis += droneControllerScript.angular.z * droneControllerScript.yawSpeed * Time.deltaTime;                                                                            // Calculate yaw
+        yAxis = droneMainTransform.eulerAngles.y;																															// Get yaw
 
         Vector3 rotation = new Vector3(tiltAmountForward, yAxis, tiltAmountRight);                                                                                          // Create a rotation vector
 

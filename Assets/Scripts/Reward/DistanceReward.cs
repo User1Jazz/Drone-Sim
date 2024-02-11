@@ -10,12 +10,25 @@ public class DistanceReward : RewardCalculator
 	void Update()
 	{
 		if(timeRemaining > 0f)
-		timeRemaining -= Time.deltaTime;
-		
-		if(Vector3.Distance(transform.position, targetPosition) < successRadius && randomlyGenerateTargets)
 		{
-			timeRemaining += gainTimeOnSuccess;
-			SetTargetPosition();
+			timeRemaining -= Time.deltaTime;
+		}
+		else
+		{
+			gameObject.SetActive(false);
+		}
+		
+		if(Vector3.Distance(transform.position, targetPosition) < successRadius)
+		{
+			if(randomlyGenerateTargets)
+			{
+				timeRemaining += gainTimeOnSuccess;
+				SetTargetPosition();
+			}else
+			{
+				gameObject.SetActive(false);
+			}
+			
 		}
 	}
 	
@@ -24,6 +37,7 @@ public class DistanceReward : RewardCalculator
 	{
 		if(Vector3.Distance(transform.position, targetPosition) < successRadius && timeRemaining > 0f)
 		{
+			session.goToTheNextStage = true;
 			return successReward;
 		}else if(timeRemaining > 0f)
 		{

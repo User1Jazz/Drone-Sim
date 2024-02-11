@@ -13,6 +13,7 @@ public class RewardCalculator : MonoBehaviour
 	public float gainTimeOnSuccess = 1f;
 	public DroneTargetPublisher targetPublisher;
 	public SwarmManager swarmManager;
+	public Session session;
 	
 	// Runtime parameters
 	public Vector3 targetPosition;
@@ -34,7 +35,7 @@ public class RewardCalculator : MonoBehaviour
 	void Update()
 	{
 		if(timeRemaining > 0f)
-			timeRemaining -= Time.deltaTime;
+			timeRemaining -= episodeLifetime - session.levelTime;
 	}
 	
 	// Function to set the target position
@@ -50,9 +51,13 @@ public class RewardCalculator : MonoBehaviour
 			Vector3 tgt = swarmManager.RequestNextTarget().position;
 			targetPosition = tgt;
 			targetPublisher.targetPosition = targetPosition;
-			
 		}
 		
+	}
+	
+	public void ResetTimer()
+	{
+		timeRemaining = session.secondsPerLevel;
 	}
 	
     public virtual float CalculateReward()

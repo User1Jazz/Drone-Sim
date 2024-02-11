@@ -11,8 +11,11 @@ public class SwarmManager : MonoBehaviour
     public bool deploySwarmOnStart = true;
     public float deployOffset = 0.1f;
 	public List<Transform> targets;
+	public bool randomlyGetTargets = true;
 
     public bool manualControl = false;
+	
+	public Session session;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +51,7 @@ public class SwarmManager : MonoBehaviour
             if (i < startPlatforms.Count)
             {
                 drones.Add(InitiateDrone("D" + i, startPlatforms[i]));
+				session.drones.Add(drones[i]);
             }
         }
         Debug.Log("Swarm of size " + drones.Count + " deployed");
@@ -66,6 +70,8 @@ public class SwarmManager : MonoBehaviour
 		drone.GetComponent<DroneTargetPublisher>().topicName = "/" + droneID + "/target";
         drone.GetComponent<ManualControlNode>().topicName = "/" + droneID + "/cmd";
         drone.GetComponent<ManualControlNode>().manualMode = manualControl;
+		drone.GetComponent<RewardCalculator>().session = session;
+		drone.GetComponent<RewardCalculator>().randomlyGenerateTargets = randomlyGetTargets;
 		
 		if(targets.Count > 0)
 		{
@@ -75,7 +81,8 @@ public class SwarmManager : MonoBehaviour
 			drone.GetComponent<RewardCalculator>().generateTargetOnStart = false;
 			drone.GetComponent<RewardCalculator>().targetPosition = tgt.position;
 		}
-
+		
+		drone.GetComponent<RewardCalculator>().ResetTimer();
         drone.GetComponent<DroneSensorsNode>().Init();
         drone.GetComponent<DroneControlNode>().Init();
 		drone.GetComponent<RewardPublisher>().Init();
@@ -89,6 +96,19 @@ public class SwarmManager : MonoBehaviour
 	public Transform RequestNextTarget()
 	{
 		return targets[Random.Range(0,targets.Count-1)];
+	}
+	
+	public void RedeploySwarm()
+	{
+		for(int i = 0; i < drones.Count; i++)
+		{
+			drones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+			drones[i].transform.position = new Vector3(startPlatforms[i].position.x, startPlatforms[i].position.y + startPlatforms[i].localScale.y + deployOffset, startPlatforms[i].position.z);
+			drones[i].transform.rotation = startPlatforms[i].rotation;
+			drones[i].SetActive(true);
+			drones[i].GetComponent<RewardCalculator>().ResetTimer();
+		}
+        Debug.Log("Swarm of size " + drones.Count + " re-deployed");
 	}
 	
 	void OnDrawGizmos()
