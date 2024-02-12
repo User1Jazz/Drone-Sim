@@ -12,6 +12,9 @@ public class IMU : MonoBehaviour
     public float[] angular_velocity_covariance;
     public float[] linear_acceleration_covariance;
     public float[] orientation_covariance;
+	public Vector3 world_position = Vector3.zero;
+	Vector3 start_pos = Vector3.zero;
+	public Vector3 local_position = Vector3.zero;
 
     /*public IMU(Vector3 _angularVelocity, Vector3 _acceleration, Quaternion _orientation, float[] _angular_velocity_covariance, float[] _linear_acceleration_covariance, float[] _orientation_covariance)
     {
@@ -22,6 +25,12 @@ public class IMU : MonoBehaviour
         linear_acceleration_covariance = _linear_acceleration_covariance;
         orientation_covariance = _orientation_covariance;
     }*/
+	
+	void Start()
+	{
+		world_position = transform.position;
+		local_position = Vector3.zero;
+	}
 
     void Update()
     {
@@ -35,6 +44,10 @@ public class IMU : MonoBehaviour
         angular_velocity_covariance = new float[9];
         linear_acceleration_covariance = new float[9];
         orientation_covariance = new float[9];
+		
+		// Get position
+		world_position = transform.position;
+		local_position = world_position - start_pos;
     }
 
     /*public IMU GetIMUReadings()

@@ -25,6 +25,8 @@ namespace RosMessageTypes.DroneSimMessages
         public Geometry.QuaternionMsg orientation;
         public Geometry.Vector3Msg angular_velocity;
         public Geometry.Vector3Msg linear_acceleration;
+        public Geometry.Vector3Msg world_position;
+        public Geometry.Vector3Msg local_position;
 
         public DroneSensorsMsg()
         {
@@ -33,15 +35,19 @@ namespace RosMessageTypes.DroneSimMessages
             this.orientation = new Geometry.QuaternionMsg();
             this.angular_velocity = new Geometry.Vector3Msg();
             this.linear_acceleration = new Geometry.Vector3Msg();
+            this.world_position = new Geometry.Vector3Msg();
+            this.local_position = new Geometry.Vector3Msg();
         }
 
-        public DroneSensorsMsg(byte[] camera_image, float height, Geometry.QuaternionMsg orientation, Geometry.Vector3Msg angular_velocity, Geometry.Vector3Msg linear_acceleration)
+        public DroneSensorsMsg(byte[] camera_image, float height, Geometry.QuaternionMsg orientation, Geometry.Vector3Msg angular_velocity, Geometry.Vector3Msg linear_acceleration, Geometry.Vector3Msg world_position, Geometry.Vector3Msg local_position)
         {
             this.camera_image = camera_image;
             this.height = height;
             this.orientation = orientation;
             this.angular_velocity = angular_velocity;
             this.linear_acceleration = linear_acceleration;
+            this.world_position = world_position;
+            this.local_position = local_position;
         }
 
         public static DroneSensorsMsg Deserialize(MessageDeserializer deserializer) => new DroneSensorsMsg(deserializer);
@@ -53,6 +59,8 @@ namespace RosMessageTypes.DroneSimMessages
             this.orientation = Geometry.QuaternionMsg.Deserialize(deserializer);
             this.angular_velocity = Geometry.Vector3Msg.Deserialize(deserializer);
             this.linear_acceleration = Geometry.Vector3Msg.Deserialize(deserializer);
+            this.world_position = Geometry.Vector3Msg.Deserialize(deserializer);
+            this.local_position = Geometry.Vector3Msg.Deserialize(deserializer);
         }
 
         public override void SerializeTo(MessageSerializer serializer)
@@ -63,6 +71,8 @@ namespace RosMessageTypes.DroneSimMessages
             serializer.Write(this.orientation);
             serializer.Write(this.angular_velocity);
             serializer.Write(this.linear_acceleration);
+            serializer.Write(this.world_position);
+            serializer.Write(this.local_position);
         }
 
         public override string ToString()
@@ -72,7 +82,9 @@ namespace RosMessageTypes.DroneSimMessages
             "\nheight: " + height.ToString() +
             "\norientation: " + orientation.ToString() +
             "\nangular_velocity: " + angular_velocity.ToString() +
-            "\nlinear_acceleration: " + linear_acceleration.ToString();
+            "\nlinear_acceleration: " + linear_acceleration.ToString() +
+            "\nworld_position: " + world_position.ToString() +
+            "\nlocal_position: " + local_position.ToString();
         }
 
 #if UNITY_EDITOR

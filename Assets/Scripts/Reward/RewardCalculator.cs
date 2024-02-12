@@ -24,7 +24,7 @@ public class RewardCalculator : MonoBehaviour
 	// Called on first frame update
 	void Start()
 	{
-		timeRemaining = episodeLifetime;
+		ResetTimer();
 		startPos = transform.position;
 		if(generateTargetOnStart)
 		{

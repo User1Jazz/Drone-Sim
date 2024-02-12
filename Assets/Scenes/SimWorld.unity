@@ -1465,7 +1465,7 @@ MonoBehaviour:
   - {fileID: 2043001639}
   - {fileID: 135792787}
   randomlyGetTargets: 0
-  manualControl: 1
+  manualControl: 0
   session: {fileID: 1955691658}
   sessionInfoPublisher: {fileID: 1955691659}
 --- !u!114 &1955691658
@@ -1490,7 +1490,7 @@ MonoBehaviour:
   hasEnded: 0
   goToTheNextStage: 0
   drones: []
-  secondsPerLevel: 60
+  secondsPerLevel: 20
   levelTime: 0
   runCount: 0
 --- !u!114 &1955691659
