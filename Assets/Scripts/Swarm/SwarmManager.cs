@@ -17,6 +17,9 @@ public class SwarmManager : MonoBehaviour
 	
 	public Session session;
 	public SessionInfoPublisher sessionInfoPublisher;
+	public SessionInfoListener sessionInfoListener;
+	
+	public bool startSessionOnStart = true;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +39,12 @@ public class SwarmManager : MonoBehaviour
                 Debug.LogWarning("Swarm size is lower than the number of platforms. Increase the swarm size to use all platforms. Current swarm size: " + swarmSize + ", current number of platforms: " + startPlatforms.Count);
 
             DeploySwarm();
+			if(startSessionOnStart)
+			{
+				StartEpisode(false);
+			}
 			sessionInfoPublisher.Init();
+			sessionInfoListener.Init();
         }
     }
 
@@ -54,6 +62,7 @@ public class SwarmManager : MonoBehaviour
             {
                 drones.Add(InitiateDrone("D" + i, startPlatforms[i]));
 				session.drones.Add(drones[i]);
+				session.previousDroneStatus.Add(true);
             }
         }
         Debug.Log("Swarm of size " + drones.Count + " deployed");
@@ -90,7 +99,8 @@ public class SwarmManager : MonoBehaviour
 		drone.GetComponent<RewardPublisher>().Init();
 		drone.GetComponent<DroneTargetPublisher>().Init();
         drone.GetComponent<ManualControlNode>().Init();
-
+		
+		sessionInfoListener.readyDrones.Add(droneID, true);
 
         return drone;
     }
@@ -111,6 +121,11 @@ public class SwarmManager : MonoBehaviour
 			drones[i].GetComponent<RewardCalculator>().ResetTimer();
 		}
         Debug.Log("Swarm of size " + drones.Count + " re-deployed");
+	}
+	
+	public void StartEpisode(bool redeployDrones)
+	{
+		session.StartSession(redeployDrones);
 	}
 	
 	void OnDrawGizmos()

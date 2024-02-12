@@ -14,7 +14,10 @@ public class Session : MonoBehaviour
 	public List<GameObject> drones;			// List of drones at runtime (for session management)
 	public float secondsPerLevel = 60;		// Time given for every level
 	public float levelTime = 0f;			// Stopwatch
-	public int runCount = 0;
+	public int runCount = 0;				// Total number of episodes
+	bool stageChanged = false;
+	
+	public List<bool> previousDroneStatus = new List<bool>();
 	
     // Start is called before the first frame update
     void Start()
@@ -22,31 +25,36 @@ public class Session : MonoBehaviour
         ActivateStage();					// Activate the first stage
 		hasEnded = false;					// Set the end flag to false (default)
 		goToTheNextStage = false;			// Set the next stage flag to false (default)
-		runCount = 0;						// Set runcount to 0 (default)
+		runCount = 1;						// Set runcount to 1
     }
 
     // Update is called once per frame
     void Update()
     {
-		levelTime += Time.deltaTime;
+		if(!hasEnded)
+		{
+			levelTime += Time.deltaTime;
+		}
 		
 		// Check session status and start next session if ended
         hasEnded = CheckSessionStatus();
-		if(hasEnded)
+		/*if(hasEnded)
 		{
-			StartSession();
-			runCount++;
-		}
+			StartSession(true);
+		}*/
     }
 	
 	// Function to start the session
-	void StartSession()
+	public void StartSession(bool redeployDrones)
 	{
+		runCount++;
 		levelTime = 0f;
 		ActivateStage();
-		swarmManager.RedeploySwarm();
+		if(redeployDrones)
+			swarmManager.RedeploySwarm();
 		hasEnded = false;
 		goToTheNextStage = false;
+		stageChanged = false;
 	}
 	
 	// Function to activate the current stage (and disable other stages)
@@ -76,7 +84,7 @@ public class Session : MonoBehaviour
 			}
 		}
 		// Otherwise it is time to reset the stage (e.g. due to timeout) or go to the next stage (e.g. due to success)
-		if(goToTheNextStage && changeStageOnEnd)
+		if(goToTheNextStage && changeStageOnEnd && !stageChanged)
 		{
 			if(loopStages && currentStage >= stages.Count-1)
 			{
@@ -86,6 +94,7 @@ public class Session : MonoBehaviour
 			{
 				currentStage++;
 			}
+			stageChanged = true;
 		}
 		return true;
 	}
