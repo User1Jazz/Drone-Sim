@@ -1368,6 +1368,7 @@ GameObject:
   - component: {fileID: 1955691655}
   - component: {fileID: 1955691657}
   - component: {fileID: 1955691658}
+  - component: {fileID: 1955691659}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -1466,6 +1467,7 @@ MonoBehaviour:
   randomlyGetTargets: 0
   manualControl: 1
   session: {fileID: 1955691658}
+  sessionInfoPublisher: {fileID: 1955691659}
 --- !u!114 &1955691658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1490,6 +1492,24 @@ MonoBehaviour:
   drones: []
   secondsPerLevel: 60
   levelTime: 0
+  runCount: 0
+--- !u!114 &1955691659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955691652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf917056dc37679479359c396d81bc65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topicName: /session/data
+  publishMessageFrequency: 0.05
+  droneStatusTopicName: status
+  sessionScript: {fileID: 1955691658}
+  initializeOnStart: 0
 --- !u!1 &2043001638
 GameObject:
   m_ObjectHideFlags: 0

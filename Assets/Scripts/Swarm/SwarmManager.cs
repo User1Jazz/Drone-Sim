@@ -16,6 +16,7 @@ public class SwarmManager : MonoBehaviour
     public bool manualControl = false;
 	
 	public Session session;
+	public SessionInfoPublisher sessionInfoPublisher;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,7 @@ public class SwarmManager : MonoBehaviour
                 Debug.LogWarning("Swarm size is lower than the number of platforms. Increase the swarm size to use all platforms. Current swarm size: " + swarmSize + ", current number of platforms: " + startPlatforms.Count);
 
             DeploySwarm();
+			sessionInfoPublisher.Init();
         }
     }
 

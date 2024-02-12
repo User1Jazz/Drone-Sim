@@ -34,7 +34,6 @@ public class DroneSensorsNode : MonoBehaviour
     {
         timeElapsed += Time.deltaTime;
 
-        // Create a new texture to read the pixels into
         if (timeElapsed > publishMessageFrequency)
         {
             PublishData();

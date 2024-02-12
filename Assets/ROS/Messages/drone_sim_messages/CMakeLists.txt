@@ -29,6 +29,7 @@ endif()
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/DroneControl.msg"
   "msg/DroneSensors.msg"
+  "msg/SessionInfo.msg"
   DEPENDENCIES std_msgs geometry_msgs)
 
 ament_package()

@@ -14,6 +14,7 @@ public class Session : MonoBehaviour
 	public List<GameObject> drones;			// List of drones at runtime (for session management)
 	public float secondsPerLevel = 60;		// Time given for every level
 	public float levelTime = 0f;			// Stopwatch
+	public int runCount = 0;
 	
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class Session : MonoBehaviour
         ActivateStage();					// Activate the first stage
 		hasEnded = false;					// Set the end flag to false (default)
 		goToTheNextStage = false;			// Set the next stage flag to false (default)
+		runCount = 0;						// Set runcount to 0 (default)
     }
 
     // Update is called once per frame
@@ -33,6 +35,7 @@ public class Session : MonoBehaviour
 		if(hasEnded)
 		{
 			StartSession();
+			runCount++;
 		}
     }
 	
