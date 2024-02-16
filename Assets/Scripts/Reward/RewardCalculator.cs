@@ -12,8 +12,12 @@ public class RewardCalculator : MonoBehaviour
 	public float episodeLifetime = 60f;
 	public float gainTimeOnSuccess = 1f;
 	public DroneTargetPublisher targetPublisher;
+	
 	public SwarmManager swarmManager;
 	public Session session;
+	
+	public bool endOnCollision = true;
+	protected bool collided = false;
 	
 	// Runtime parameters
 	public Vector3 targetPosition;
@@ -64,6 +68,14 @@ public class RewardCalculator : MonoBehaviour
 	{
 		return 0f;
 	}
+	
+	protected void OnCollisionEnter(Collision collision)
+    {
+		if(endOnCollision)
+		{
+			collided = true;
+		}
+    }
 	
 	public virtual void OnDrawGizmos()
     {

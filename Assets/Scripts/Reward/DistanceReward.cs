@@ -11,6 +11,11 @@ public class DistanceReward : RewardCalculator
 	{
 		if(timeRemaining > 0f)
 		{
+			if(collided)
+			{
+				collided = false;
+				gameObject.SetActive(false);
+			}
 			timeRemaining -= Time.deltaTime;
 		}
 		else
@@ -44,6 +49,10 @@ public class DistanceReward : RewardCalculator
 		// Get runtime reward
 		else if(timeRemaining > 0f)
 		{
+			if(collided)
+			{
+				return Vector3.Distance(transform.position, targetPosition) * failureReward;
+			}
 			// If within the radius of a circle where target is in the center and the start position is at the edge
 			if(Vector3.Distance(targetPosition, transform.position) <= Vector3.Distance(targetPosition, startPos))
 			{
