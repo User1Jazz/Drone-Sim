@@ -164,7 +164,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!65 &8094375305740979250
 BoxCollider:
@@ -330,8 +330,8 @@ MonoBehaviour:
   targetPosMax: {x: 25, y: 25, z: 25}
   generateTargetOnStart: 0
   randomlyGenerateTargets: 1
-  successReward: -100
-  failureReward: 100
+  successReward: 100
+  failureReward: -100
   episodeLifetime: 60
   gainTimeOnSuccess: 1
   targetPublisher: {fileID: 5125291584198904269}
