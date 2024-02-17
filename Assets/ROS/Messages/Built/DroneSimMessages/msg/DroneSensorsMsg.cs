@@ -17,6 +17,8 @@ namespace RosMessageTypes.DroneSimMessages
         //  Infrared Sensor data
         public float height;
         //  Single proximity value for height
+        public float battery;
+        //  Battery percentage
         //  Imu data
         //  Accelerations should be in m/s^2 (not in g's), and rotational velocity should be in rad/sec
         public Geometry.QuaternionMsg orientation;
@@ -31,6 +33,7 @@ namespace RosMessageTypes.DroneSimMessages
         public DroneSensorsMsg()
         {
             this.height = 0.0f;
+            this.battery = 0.0f;
             this.orientation = new Geometry.QuaternionMsg();
             this.angular_velocity = new Geometry.Vector3Msg();
             this.linear_acceleration = new Geometry.Vector3Msg();
@@ -39,9 +42,10 @@ namespace RosMessageTypes.DroneSimMessages
             this.camera_image = new byte[0];
         }
 
-        public DroneSensorsMsg(float height, Geometry.QuaternionMsg orientation, Geometry.Vector3Msg angular_velocity, Geometry.Vector3Msg linear_acceleration, Geometry.Vector3Msg world_position, Geometry.Vector3Msg local_position, byte[] camera_image)
+        public DroneSensorsMsg(float height, float battery, Geometry.QuaternionMsg orientation, Geometry.Vector3Msg angular_velocity, Geometry.Vector3Msg linear_acceleration, Geometry.Vector3Msg world_position, Geometry.Vector3Msg local_position, byte[] camera_image)
         {
             this.height = height;
+            this.battery = battery;
             this.orientation = orientation;
             this.angular_velocity = angular_velocity;
             this.linear_acceleration = linear_acceleration;
@@ -55,6 +59,7 @@ namespace RosMessageTypes.DroneSimMessages
         private DroneSensorsMsg(MessageDeserializer deserializer)
         {
             deserializer.Read(out this.height);
+            deserializer.Read(out this.battery);
             this.orientation = Geometry.QuaternionMsg.Deserialize(deserializer);
             this.angular_velocity = Geometry.Vector3Msg.Deserialize(deserializer);
             this.linear_acceleration = Geometry.Vector3Msg.Deserialize(deserializer);
@@ -66,6 +71,7 @@ namespace RosMessageTypes.DroneSimMessages
         public override void SerializeTo(MessageSerializer serializer)
         {
             serializer.Write(this.height);
+            serializer.Write(this.battery);
             serializer.Write(this.orientation);
             serializer.Write(this.angular_velocity);
             serializer.Write(this.linear_acceleration);
@@ -79,6 +85,7 @@ namespace RosMessageTypes.DroneSimMessages
         {
             return "DroneSensorsMsg: " +
             "\nheight: " + height.ToString() +
+            "\nbattery: " + battery.ToString() +
             "\norientation: " + orientation.ToString() +
             "\nangular_velocity: " + angular_velocity.ToString() +
             "\nlinear_acceleration: " + linear_acceleration.ToString() +

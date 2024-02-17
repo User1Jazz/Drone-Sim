@@ -2557,7 +2557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 726d9db749141ac40bd92fc42df92a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changeStageOnEnd: 1
+  changeStageOnEnd: 0
   loopStages: 1
   stages:
   - {fileID: 244643850}

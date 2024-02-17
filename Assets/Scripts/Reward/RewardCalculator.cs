@@ -61,6 +61,7 @@ public class RewardCalculator : MonoBehaviour
 	
 	public void ResetTimer()
 	{
+		episodeLifetime = session.secondsPerLevel;
 		timeRemaining = session.secondsPerLevel;
 	}
 	

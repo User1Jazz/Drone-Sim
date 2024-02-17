@@ -17,6 +17,7 @@ public class DroneSensorsNode : MonoBehaviour
     public IMU imu;                                     // Reference to the IMU Script
     public IR ir;                                       // Reference to the IR Script
     public VirtualCamera droneCam;                      // Reference to the camera script
+	public RewardCalculator rewardCalculator;			// Reference to the reward calculator script
 	
 	[SerializeField] bool initializeOnStart = false;
 
@@ -52,6 +53,7 @@ public class DroneSensorsNode : MonoBehaviour
 		 //Note: Y and Z axis switched due to Unity's coordinate system
         DroneSensorsMsg message = new DroneSensorsMsg(
             ir.value,
+			(rewardCalculator.timeRemaining / rewardCalculator.episodeLifetime),
             new QuaternionMsg(imu.orientation.x, imu.orientation.z, imu.orientation.y, imu.orientation.w),
             new Vector3Msg(imu.angularVelocity.x, imu.angularVelocity.z, imu.angularVelocity.y),
             new Vector3Msg(imu.acceleration.x, imu.acceleration.z, imu.acceleration.y),

@@ -193,9 +193,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  yawSpeed: 30
-  pitchSpeed: 30
-  rollSpeed: 30
+  yawSpeed: 10
+  pitchSpeed: 10
+  rollSpeed: 10
   motorPower: 5
 --- !u!114 &6363175317022082813
 MonoBehaviour:
@@ -279,6 +279,7 @@ MonoBehaviour:
   imu: {fileID: 3391125806404709752}
   ir: {fileID: 968146912053103772}
   droneCam: {fileID: 1221578946994107643}
+  rewardCalculator: {fileID: 8377244053573608500}
   initializeOnStart: 0
 --- !u!114 &5338470859072853454
 MonoBehaviour:
@@ -337,6 +338,7 @@ MonoBehaviour:
   targetPublisher: {fileID: 5125291584198904269}
   swarmManager: {fileID: 0}
   session: {fileID: 0}
+  endOnCollision: 1
   targetPosition: {x: 0, y: 0, z: 0}
   timeRemaining: 0
   episodeOver: 0
