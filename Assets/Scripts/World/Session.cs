@@ -47,14 +47,17 @@ public class Session : MonoBehaviour
 	// Function to start the session
 	public void StartSession(bool redeployDrones)
 	{
-		runCount++;
-		levelTime = 0f;
-		ActivateStage();
-		if(redeployDrones)
-			swarmManager.RedeploySwarm();
-		hasEnded = false;
-		goToTheNextStage = false;
-		stageChanged = false;
+		if(hasEnded)
+		{
+			runCount++;
+			levelTime = 0f;
+			ActivateStage();
+			if(redeployDrones)
+				swarmManager.RedeploySwarm();
+			hasEnded = false;
+			goToTheNextStage = false;
+			stageChanged = false;
+		}
 	}
 	
 	// Function to activate the current stage (and disable other stages)

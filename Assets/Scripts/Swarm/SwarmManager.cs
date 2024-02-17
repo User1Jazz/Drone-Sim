@@ -11,6 +11,8 @@ public class SwarmManager : MonoBehaviour
     public bool deploySwarmOnStart = true;
     public float deployOffset = 0.1f;
 	public List<Transform> targets;
+	[Range(0f,1f)]
+	public float targetMarkerSize = 0.2f;
 	public bool randomlyGetTargets = true;
 
     public bool manualControl = false;
@@ -20,6 +22,8 @@ public class SwarmManager : MonoBehaviour
 	public SessionInfoListener sessionInfoListener;
 	
 	public bool startSessionOnStart = true;
+	
+	public bool endOnCollision = true;
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +85,7 @@ public class SwarmManager : MonoBehaviour
 		drone.GetComponent<DroneTargetPublisher>().topicName = "/" + droneID + "/target";
         drone.GetComponent<ManualControlNode>().topicName = "/" + droneID + "/cmd";
         drone.GetComponent<ManualControlNode>().manualMode = manualControl;
+		drone.GetComponent<RewardCalculator>().endOnCollision = endOnCollision;
 		drone.GetComponent<RewardCalculator>().session = session;
 		drone.GetComponent<RewardCalculator>().randomlyGenerateTargets = randomlyGetTargets;
 		
@@ -114,10 +119,14 @@ public class SwarmManager : MonoBehaviour
 	{
 		for(int i = 0; i < drones.Count; i++)
 		{
-			drones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
 			drones[i].transform.position = new Vector3(startPlatforms[i].position.x, startPlatforms[i].position.y + startPlatforms[i].localScale.y + deployOffset, startPlatforms[i].position.z);
 			drones[i].transform.rotation = startPlatforms[i].rotation;
+			drones[i].GetComponent<DroneController>().linear = Vector3.zero;
+			drones[i].GetComponent<DroneController>().angular = Vector3.zero;
 			drones[i].SetActive(true);
+			drones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+			drones[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+			drones[i].GetComponent<RewardCalculator>().endOnCollision = endOnCollision;
 			drones[i].GetComponent<RewardCalculator>().ResetTimer();
 		}
         Debug.Log("Swarm of size " + drones.Count + " re-deployed");
@@ -138,7 +147,7 @@ public class SwarmManager : MonoBehaviour
 				{
 					// Draw a yellow sphere at the transform's position
 					Gizmos.color = Color.yellow;
-					Gizmos.DrawSphere(target.position, 0.1f);
+					Gizmos.DrawSphere(target.position, targetMarkerSize);
 				}
 			}			
 		}

@@ -51,13 +51,13 @@ public class DroneSensorsNode : MonoBehaviour
     {
 		 //Note: Y and Z axis switched due to Unity's coordinate system
         DroneSensorsMsg message = new DroneSensorsMsg(
-            droneCam.GetImage(),
             ir.value,
             new QuaternionMsg(imu.orientation.x, imu.orientation.z, imu.orientation.y, imu.orientation.w),
             new Vector3Msg(imu.angularVelocity.x, imu.angularVelocity.z, imu.angularVelocity.y),
             new Vector3Msg(imu.acceleration.x, imu.acceleration.z, imu.acceleration.y),
 			new Vector3Msg(imu.world_position.x, imu.world_position.z, imu.world_position.y),
-			new Vector3Msg(imu.local_position.x, imu.local_position.z, imu.local_position.y));
+			new Vector3Msg(imu.local_position.x, imu.local_position.z, imu.local_position.y),
+			droneCam.GetImage());
 
         ros.Publish(topicName, message);
     }

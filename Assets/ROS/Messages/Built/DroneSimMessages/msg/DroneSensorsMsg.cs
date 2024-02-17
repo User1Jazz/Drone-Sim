@@ -14,9 +14,6 @@ namespace RosMessageTypes.DroneSimMessages
         public override string RosMessageName => k_RosMessageName;
 
         //  Drone Sensor Data
-        //  Camera data
-        public byte[] camera_image;
-        //  Compressed image buffer
         //  Infrared Sensor data
         public float height;
         //  Single proximity value for height
@@ -27,64 +24,67 @@ namespace RosMessageTypes.DroneSimMessages
         public Geometry.Vector3Msg linear_acceleration;
         public Geometry.Vector3Msg world_position;
         public Geometry.Vector3Msg local_position;
+        //  Camera data
+        public byte[] camera_image;
+        //  Compressed image buffer
 
         public DroneSensorsMsg()
         {
-            this.camera_image = new byte[0];
             this.height = 0.0f;
             this.orientation = new Geometry.QuaternionMsg();
             this.angular_velocity = new Geometry.Vector3Msg();
             this.linear_acceleration = new Geometry.Vector3Msg();
             this.world_position = new Geometry.Vector3Msg();
             this.local_position = new Geometry.Vector3Msg();
+            this.camera_image = new byte[0];
         }
 
-        public DroneSensorsMsg(byte[] camera_image, float height, Geometry.QuaternionMsg orientation, Geometry.Vector3Msg angular_velocity, Geometry.Vector3Msg linear_acceleration, Geometry.Vector3Msg world_position, Geometry.Vector3Msg local_position)
+        public DroneSensorsMsg(float height, Geometry.QuaternionMsg orientation, Geometry.Vector3Msg angular_velocity, Geometry.Vector3Msg linear_acceleration, Geometry.Vector3Msg world_position, Geometry.Vector3Msg local_position, byte[] camera_image)
         {
-            this.camera_image = camera_image;
             this.height = height;
             this.orientation = orientation;
             this.angular_velocity = angular_velocity;
             this.linear_acceleration = linear_acceleration;
             this.world_position = world_position;
             this.local_position = local_position;
+            this.camera_image = camera_image;
         }
 
         public static DroneSensorsMsg Deserialize(MessageDeserializer deserializer) => new DroneSensorsMsg(deserializer);
 
         private DroneSensorsMsg(MessageDeserializer deserializer)
         {
-            deserializer.Read(out this.camera_image, sizeof(byte), deserializer.ReadLength());
             deserializer.Read(out this.height);
             this.orientation = Geometry.QuaternionMsg.Deserialize(deserializer);
             this.angular_velocity = Geometry.Vector3Msg.Deserialize(deserializer);
             this.linear_acceleration = Geometry.Vector3Msg.Deserialize(deserializer);
             this.world_position = Geometry.Vector3Msg.Deserialize(deserializer);
             this.local_position = Geometry.Vector3Msg.Deserialize(deserializer);
+            deserializer.Read(out this.camera_image, sizeof(byte), deserializer.ReadLength());
         }
 
         public override void SerializeTo(MessageSerializer serializer)
         {
-            serializer.WriteLength(this.camera_image);
-            serializer.Write(this.camera_image);
             serializer.Write(this.height);
             serializer.Write(this.orientation);
             serializer.Write(this.angular_velocity);
             serializer.Write(this.linear_acceleration);
             serializer.Write(this.world_position);
             serializer.Write(this.local_position);
+            serializer.WriteLength(this.camera_image);
+            serializer.Write(this.camera_image);
         }
 
         public override string ToString()
         {
             return "DroneSensorsMsg: " +
-            "\ncamera_image: " + System.String.Join(", ", camera_image.ToList()) +
             "\nheight: " + height.ToString() +
             "\norientation: " + orientation.ToString() +
             "\nangular_velocity: " + angular_velocity.ToString() +
             "\nlinear_acceleration: " + linear_acceleration.ToString() +
             "\nworld_position: " + world_position.ToString() +
-            "\nlocal_position: " + local_position.ToString();
+            "\nlocal_position: " + local_position.ToString() +
+            "\ncamera_image: " + System.String.Join(", ", camera_image.ToList());
         }
 
 #if UNITY_EDITOR

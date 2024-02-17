@@ -1,8 +1,5 @@
 # Drone Sensor Data
 
-# Camera data
-uint8[] camera_image # Compressed image buffer
-
 # Infrared Sensor data
 float32 height # Single proximity value for height
 
@@ -13,3 +10,6 @@ geometry_msgs/Vector3 angular_velocity
 geometry_msgs/Vector3 linear_acceleration
 geometry_msgs/Vector3 world_position
 geometry_msgs/Vector3 local_position
+
+# Camera data
+uint8[] camera_image # Compressed image buffer
