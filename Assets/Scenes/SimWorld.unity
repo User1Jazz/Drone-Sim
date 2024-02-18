@@ -2539,7 +2539,7 @@ MonoBehaviour:
   - {fileID: 376705841}
   targetMarkerSize: 0.2
   randomlyGetTargets: 0
-  manualControl: 0
+  manualControl: 1
   session: {fileID: 1955691658}
   sessionInfoPublisher: {fileID: 1955691659}
   sessionInfoListener: {fileID: 1955691660}
@@ -2570,6 +2570,7 @@ MonoBehaviour:
   secondsPerLevel: 30
   levelTime: 0
   runCount: 0
+  successfulRuns: 0
   previousDroneStatus: 
 --- !u!114 &1955691659
 MonoBehaviour:

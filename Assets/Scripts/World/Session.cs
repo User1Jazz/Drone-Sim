@@ -15,6 +15,7 @@ public class Session : MonoBehaviour
 	public float secondsPerLevel = 60;		// Time given for every level
 	public float levelTime = 0f;			// Stopwatch
 	public int runCount = 0;				// Total number of episodes
+	public int successfulRuns = 0;			// Number of successful runs
 	bool stageChanged = false;
 	
 	public List<bool> previousDroneStatus = new List<bool>();

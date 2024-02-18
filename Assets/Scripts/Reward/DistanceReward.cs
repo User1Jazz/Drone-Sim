@@ -35,6 +35,7 @@ public class DistanceReward : RewardCalculator
 		
 		if(Vector3.Distance(transform.position, targetPosition) < successRadius)
 		{
+			session.successfulRuns++;
 			if(randomlyGenerateTargets)
 			{
 				timeRemaining += gainTimeOnSuccess;
