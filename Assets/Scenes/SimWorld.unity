@@ -2567,7 +2567,7 @@ MonoBehaviour:
   hasEnded: 0
   goToTheNextStage: 0
   drones: []
-  secondsPerLevel: 20
+  secondsPerLevel: 30
   levelTime: 0
   runCount: 0
   previousDroneStatus: 

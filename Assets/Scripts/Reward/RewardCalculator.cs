@@ -9,6 +9,7 @@ public class RewardCalculator : MonoBehaviour
 	public bool randomlyGenerateTargets = false;
 	public float successReward = 100f;
 	public float failureReward = -100f;
+	public float rewardScale = 0.01f;
 	public float episodeLifetime = 60f;
 	public float gainTimeOnSuccess = 1f;
 	public DroneTargetPublisher targetPublisher;

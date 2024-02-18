@@ -5,6 +5,9 @@ using UnityEngine;
 public class DistanceReward : RewardCalculator
 {
 	public float successRadius = 2f;
+	private Vector3 previousPosition = Vector3.zero;
+	float timeElapsed = 0f;
+	
 	
 	// Called every frame update
 	void Update()
@@ -21,6 +24,13 @@ public class DistanceReward : RewardCalculator
 		else
 		{
 			gameObject.SetActive(false);
+		}
+		
+		timeElapsed += Time.deltaTime;
+		if(timeElapsed > 0.2f)
+		{
+			previousPosition = transform.position;
+			timeElapsed = 0f;
 		}
 		
 		if(Vector3.Distance(transform.position, targetPosition) < successRadius)
@@ -49,6 +59,7 @@ public class DistanceReward : RewardCalculator
 		// Get runtime reward
 		else if(timeRemaining > 0f)
 		{
+			// If collision reward enabled (see RewardCalculator script) and if collided, give punishment
 			if(collided)
 			{
 				return Vector3.Distance(transform.position, targetPosition) * failureReward;
@@ -56,14 +67,19 @@ public class DistanceReward : RewardCalculator
 			// If within the radius of a circle where target is in the center and the start position is at the edge
 			if(Vector3.Distance(targetPosition, transform.position) <= Vector3.Distance(targetPosition, startPos))
 			{
+				// To encourage the agent to move around (the 'poke' reward [i.e. punishment])
+				if(Vector3.Distance(transform.position, previousPosition) <= 0.1f)
+				{
+					return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * failureReward * rewardScale;
+				}
 				// currentDist / startDist * successReward
-				return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward;
+				return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward * rewardScale;
 			}
 			// If outside the circle, receive punishment reward
 			else
 			{
 				// currentDist / startDist * failureReward
-				return (1f - Vector3.Distance(transform.position, targetPosition) / Vector3.Distance(startPos, targetPosition)) * -failureReward;
+				return (1f - Vector3.Distance(transform.position, targetPosition) / Vector3.Distance(startPos, targetPosition)) * -failureReward * rewardScale;
 			}
 		}
 		// Get the worst punishment on timeout
@@ -81,5 +97,6 @@ public class DistanceReward : RewardCalculator
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(targetPosition, successRadius);			
 		}
+		Gizmos.DrawWireSphere(previousPosition, 0.1f);
     }
 }
