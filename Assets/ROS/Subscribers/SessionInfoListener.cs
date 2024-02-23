@@ -7,13 +7,13 @@ using RosMessageTypes.DroneSimMessages;
 
 public class SessionInfoListener : MonoBehaviour
 {
-	public SwarmManager swarmManager;
     public string topicName = "/session/data";
 	public Dictionary<string, bool> readyDrones = new Dictionary<string, bool>();
 	
 	[SerializeField] bool initializeOnStart = false;
 	
 	public SessionInfoPublisher sessionInfoPublisher;
+	public Session sessionScript;
 	
 	public bool waitForDroneReport = true;
 	
@@ -48,6 +48,6 @@ public class SessionInfoListener : MonoBehaviour
 			}
 		}
 		Debug.Log("Starting next episode");
-		swarmManager.StartEpisode(true);
+		sessionScript.StartSession(true);
     }
 }

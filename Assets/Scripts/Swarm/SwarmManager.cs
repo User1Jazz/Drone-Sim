@@ -11,6 +11,10 @@ public class SwarmManager : MonoBehaviour
     public bool deploySwarmOnStart = true;
     public float deployOffset = 0.1f;
 	public List<Transform> targets;
+	public GameObject targetObject;
+	public bool spawnTargetObject = false;
+	public Transform targetObjectsParent;
+	bool targetsDespawned = true;
 	[Range(0f,1f)]
 	public float targetMarkerSize = 0.2f;
 	public bool randomlyGetTargets = true;
@@ -91,7 +95,13 @@ public class SwarmManager : MonoBehaviour
 		
 		if(targets.Count > 0)
 		{
+			// Handle target
 			Transform tgt = RequestNextTarget();
+			if(spawnTargetObject)
+			{
+				GameObject target = Instantiate(targetObject, tgt.position, Quaternion.identity, targetObjectsParent);
+				target.transform.localScale = new Vector3(targetMarkerSize+0.2f, targetMarkerSize+0.2f, targetMarkerSize+0.2f);
+			}
 			drone.GetComponent<DroneTargetPublisher>().targetPosition = tgt.position;
 			drone.GetComponent<RewardCalculator>().swarmManager = this;
 			drone.GetComponent<RewardCalculator>().generateTargetOnStart = false;
@@ -128,12 +138,29 @@ public class SwarmManager : MonoBehaviour
 			drones[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 			drones[i].GetComponent<RewardCalculator>().endOnCollision = endOnCollision;
 			drones[i].GetComponent<RewardCalculator>().ResetTimer();
+			
+			if(spawnTargetObject)
+			{
+				GameObject target = Instantiate(targetObject, drones[i].GetComponent<DroneTargetPublisher>().targetPosition, Quaternion.identity, targetObjectsParent);
+				target.transform.localScale = new Vector3(targetMarkerSize+0.2f, targetMarkerSize+0.2f, targetMarkerSize+0.2f);
+				Debug.Log("Target spawned");
+			}
 		}
         Debug.Log("Swarm of size " + drones.Count + " re-deployed");
+		targetsDespawned = false;
 	}
 	
 	public void StartEpisode(bool redeployDrones)
 	{
+		// Destroy previous targets
+		if(!targetsDespawned && targetObjectsParent.childCount > 0)
+		{
+			Debug.Log("Deleting targets...");
+			for(int i = targetObjectsParent.childCount - 1; i >= 0; i--)
+			{
+				Destroy(targetObjectsParent.GetChild(i).gameObject);
+			}
+		}
 		session.StartSession(redeployDrones);
 	}
 	
