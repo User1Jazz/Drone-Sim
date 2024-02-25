@@ -152,8 +152,13 @@ public class SwarmManager : MonoBehaviour
 	
 	public void StartEpisode(bool redeployDrones)
 	{
+		session.StartSession(redeployDrones);
+	}
+	
+	public void DeleteTargetMesh()
+	{
 		// Destroy previous targets
-		if(!targetsDespawned && targetObjectsParent.childCount > 0)
+		if(targetObjectsParent.childCount > 0)
 		{
 			Debug.Log("Deleting targets...");
 			for(int i = targetObjectsParent.childCount - 1; i >= 0; i--)
@@ -161,7 +166,6 @@ public class SwarmManager : MonoBehaviour
 				Destroy(targetObjectsParent.GetChild(i).gameObject);
 			}
 		}
-		session.StartSession(redeployDrones);
 	}
 	
 	void OnDrawGizmos()

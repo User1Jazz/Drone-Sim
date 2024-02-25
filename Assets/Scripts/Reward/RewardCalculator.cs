@@ -7,9 +7,9 @@ public class RewardCalculator : MonoBehaviour
 	public Vector3 targetPosMax = new Vector3(100f, 100f, 100f);
 	public bool generateTargetOnStart = true;
 	public bool randomlyGenerateTargets = false;
-	public float successReward = 100f;
-	public float failureReward = -100f;
-	public float rewardScale = 0.01f;
+	public float successReward = 1f;
+	public float failureReward = -1f;
+	public float rewardScale = 1f;
 	public float episodeLifetime = 60f;
 	public float gainTimeOnSuccess = 1f;
 	public DroneTargetPublisher targetPublisher;

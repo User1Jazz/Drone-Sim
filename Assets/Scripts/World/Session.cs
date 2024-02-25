@@ -54,6 +54,7 @@ public class Session : MonoBehaviour
 			levelTime = 0f;
 			ActivateStage();
 			if(redeployDrones)
+				swarmManager.DeleteTargetMesh();
 				swarmManager.RedeploySwarm();
 			hasEnded = false;
 			goToTheNextStage = false;

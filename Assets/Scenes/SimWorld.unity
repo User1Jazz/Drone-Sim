@@ -5423,7 +5423,7 @@ MonoBehaviour:
   sessionInfoPublisher: {fileID: 1955691659}
   sessionInfoListener: {fileID: 1955691660}
   startSessionOnStart: 1
-  endOnCollision: 0
+  endOnCollision: 1
 --- !u!114 &1955691658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5447,7 +5447,7 @@ MonoBehaviour:
   hasEnded: 0
   goToTheNextStage: 0
   drones: []
-  secondsPerLevel: 50
+  secondsPerLevel: 60
   levelTime: 0
   runCount: 0
   successfulRuns: 0
@@ -5481,7 +5481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3379c9c25fdcf94e9b236bba7187f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swarmManager: {fileID: 1955691657}
   topicName: /session/data
   initializeOnStart: 0
   sessionInfoPublisher: {fileID: 1955691659}
