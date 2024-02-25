@@ -19,7 +19,7 @@ public class DistanceReward : RewardCalculator
 		{
 			if(collided)
 			{
-				collided = false;
+				CalculateReward();
 				gameObject.SetActive(false);
 			}
 			timeRemaining -= Time.deltaTime;
@@ -71,6 +71,11 @@ public class DistanceReward : RewardCalculator
 		{
 			// If collision reward enabled (see RewardCalculator script) and if collided, give punishment
 			if(collided)
+			{
+				return failureReward * rewardScale;
+			}
+			// If still on the start position, have no mercy. Punish the hell out of it!
+			if(Vector3.Distance(startPos, transform.position) < 0.1f)
 			{
 				return failureReward * rewardScale;
 			}

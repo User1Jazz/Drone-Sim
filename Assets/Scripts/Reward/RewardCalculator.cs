@@ -60,6 +60,12 @@ public class RewardCalculator : MonoBehaviour
 		
 	}
 	
+	public void Reset()
+	{
+		ResetTimer();
+		collided = false;
+	}
+	
 	public void ResetTimer()
 	{
 		episodeLifetime = session.secondsPerLevel;

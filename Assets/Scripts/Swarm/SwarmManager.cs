@@ -108,7 +108,7 @@ public class SwarmManager : MonoBehaviour
 			drone.GetComponent<RewardCalculator>().targetPosition = tgt.position;
 		}
 		
-		drone.GetComponent<RewardCalculator>().ResetTimer();
+		drone.GetComponent<RewardCalculator>().Reset();
         drone.GetComponent<DroneSensorsNode>().Init();
         drone.GetComponent<DroneControlNode>().Init();
 		drone.GetComponent<RewardPublisher>().Init();
@@ -137,7 +137,7 @@ public class SwarmManager : MonoBehaviour
 			drones[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
 			drones[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 			drones[i].GetComponent<RewardCalculator>().endOnCollision = endOnCollision;
-			drones[i].GetComponent<RewardCalculator>().ResetTimer();
+			drones[i].GetComponent<RewardCalculator>().Reset();
 			
 			if(spawnTargetObject)
 			{
