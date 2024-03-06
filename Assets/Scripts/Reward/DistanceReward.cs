@@ -10,6 +10,7 @@ public class DistanceReward : RewardCalculator
 	public float idleTimeout = 1f;
 	float positionTimeElapsed = 0f;
 	float pokeTimeElapsed = 0f;
+	public bool punishOnTimeout = false;
 	
 	
 	// Called every frame update
@@ -98,9 +99,39 @@ public class DistanceReward : RewardCalculator
 			}
 		}
 		// Get punishment on timeout
-		else
+		else if (punishOnTimeout)
 		{
 			return failureReward * rewardScale;
+		}
+		else
+		{
+			// If collision reward enabled (see RewardCalculator script) and if collided, give punishment
+			if(collided)
+			{
+				return failureReward * rewardScale;
+			}
+			// If still on the start position, have no mercy. Punish the hell out of it!
+			if(Vector3.Distance(startPos, transform.position) < 0.1f)
+			{
+				return failureReward * rewardScale;
+			}
+			// If within the radius of a circle where target is in the center and the start position is at the edge
+			if(Vector3.Distance(targetPosition, transform.position) <= Vector3.Distance(targetPosition, startPos))
+			{
+				// To encourage the agent to move around (the 'poke' reward [i.e. punishment])
+				if(Vector3.Distance(transform.position, pokePosition) <= 0.1f)
+				{
+					return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * failureReward * rewardScale;
+				}
+				// currentDist / startDist * successReward
+				return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward * rewardScale;
+			}
+			// If outside the circle, receive punishment reward
+			else
+			{
+				// currentDist / startDist * failureReward
+				return (1f - Vector3.Distance(transform.position, targetPosition) / Vector3.Distance(startPos, targetPosition)) * -failureReward * rewardScale;
+			}
 		}
 	}
 	

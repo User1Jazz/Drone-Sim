@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8094375304505352062}
   - component: {fileID: 8094375304505351936}
+  - component: {fileID: 6402600164814648433}
   m_Layer: 0
   m_Name: DroneCamera
   m_TagString: Untagged
@@ -106,6 +107,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &6402600164814648433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8094375304505352063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb2c58b2e6c47f3418128d84a44560ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8094375305740979242
 GameObject:
   m_ObjectHideFlags: 0
