@@ -8,6 +8,8 @@ public class DepthCamera : MonoBehaviour
 {
 	Camera cam;
 	Material mat;
+	public bool invertColor = true;
+	bool changesFlag = false;
 	
     // Start is called before the first frame update
     void Start()
@@ -23,9 +25,16 @@ public class DepthCamera : MonoBehaviour
 			cam = this.GetComponent<Camera>();
 			cam.depthTextureMode = DepthTextureMode.DepthNormals;
 		}
-		if(mat == null)
+		if(mat == null || changesFlag != invertColor)
 		{
-			mat = new Material(Shader.Find("Hidden/DepthNormalShader"));
+			if(invertColor)
+			{
+				mat = new Material(Shader.Find("Hidden/InvertedDepthNormalShader"));
+			}else
+			{
+				mat = new Material(Shader.Find("Hidden/DepthNormalShader"));
+			}
+			changesFlag = invertColor;
 		}
     }
 	

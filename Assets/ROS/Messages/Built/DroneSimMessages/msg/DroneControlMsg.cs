@@ -15,6 +15,8 @@ namespace RosMessageTypes.DroneSimMessages
 
         //  ROS2 Message for Drone Control
         public Geometry.TwistMsg twist;
+        public Geometry.Vector3Msg speed;
+        //  x = roll/nick speed, y = yaw speed, z = throttle (up/down) speed
         //  Description below is the definition of the twist message
         //    Vector3 linear
         //     float64 x  # Forward/Backward
@@ -28,11 +30,13 @@ namespace RosMessageTypes.DroneSimMessages
         public DroneControlMsg()
         {
             this.twist = new Geometry.TwistMsg();
+            this.speed = new Geometry.Vector3Msg();
         }
 
-        public DroneControlMsg(Geometry.TwistMsg twist)
+        public DroneControlMsg(Geometry.TwistMsg twist, Geometry.Vector3Msg speed)
         {
             this.twist = twist;
+            this.speed = speed;
         }
 
         public static DroneControlMsg Deserialize(MessageDeserializer deserializer) => new DroneControlMsg(deserializer);
@@ -40,17 +44,20 @@ namespace RosMessageTypes.DroneSimMessages
         private DroneControlMsg(MessageDeserializer deserializer)
         {
             this.twist = Geometry.TwistMsg.Deserialize(deserializer);
+            this.speed = Geometry.Vector3Msg.Deserialize(deserializer);
         }
 
         public override void SerializeTo(MessageSerializer serializer)
         {
             serializer.Write(this.twist);
+            serializer.Write(this.speed);
         }
 
         public override string ToString()
         {
             return "DroneControlMsg: " +
-            "\ntwist: " + twist.ToString();
+            "\ntwist: " + twist.ToString() +
+            "\nspeed: " + speed.ToString();
         }
 
 #if UNITY_EDITOR

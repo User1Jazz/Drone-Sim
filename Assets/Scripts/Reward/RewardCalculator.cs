@@ -79,10 +79,12 @@ public class RewardCalculator : MonoBehaviour
 	
 	protected void OnCollisionEnter(Collision collision)
     {
-		if(endOnCollision)
-		{
-			collided = true;
-		}
+		collided = true;
+    }
+	
+	protected void OnCollisionExit(Collision collision)
+    {
+		collided = false;
     }
 	
 	public virtual void OnDrawGizmos()

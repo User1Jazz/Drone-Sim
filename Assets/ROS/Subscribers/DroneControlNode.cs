@@ -31,5 +31,9 @@ public class DroneControlNode : MonoBehaviour
         droneControllerScript.angular.x = (float)message.twist.angular.x;   // Roll
         droneControllerScript.angular.y = (float)message.twist.angular.y;   // Pitch
         droneControllerScript.angular.z = (float)message.twist.angular.z;   // Yaw (turn left/right)
+		
+		droneControllerScript.rollSpeed = (float)message.speed.x;
+		droneControllerScript.yawSpeed = (float)message.speed.y;
+		droneControllerScript.throttleSpeed = (float)message.speed.z;
     }
 }

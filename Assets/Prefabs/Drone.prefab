@@ -88,7 +88,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 1000
+  far clip plane: 7
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -173,7 +173,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 10
-  m_AngularDrag: 0.05
+  m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -206,10 +206,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  yawSpeed: 10
-  pitchSpeed: 10
-  rollSpeed: 10
-  motorPower: 5
+  maxYawSpeed: 9
+  maxThrottleSpeed: 5
+  maxRollSpeed: 9
+  yawSpeed: 5
+  throttleSpeed: 5
+  rollSpeed: 5
+  speedMultiplier: 10
 --- !u!114 &6363175317022082813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,6 +331,9 @@ MonoBehaviour:
   manualMode: 1
   started: 0
   initializeOnStart: 0
+  rollSpeed: 9
+  yawSpeed: 9
+  throttleSpeed: 5
 --- !u!114 &8377244053573608500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,6 +364,7 @@ MonoBehaviour:
   episodeOver: 0
   successRadius: 1
   idleTimeout: 0.5
+  punishOnTimeout: 0
 --- !u!114 &5125291584198904269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droneControllerScript: {fileID: 8094375305740979248}
   droneMainTransform: {fileID: 8094375305740979246}
+  maxRollAngle: 25
   clockwisePropellers:
   - {fileID: 2629619600651135393}
   - {fileID: 8243814350388729557}

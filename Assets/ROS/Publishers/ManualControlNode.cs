@@ -20,6 +20,10 @@ public class ManualControlNode : MonoBehaviour
 	
 	[SerializeField] bool initializeOnStart = false;
 	
+	public float rollSpeed = 10f;
+	public float yawSpeed = 10f;
+	public float throttleSpeed = 5f;
+	
 	void Start()
 	{
 		if(initializeOnStart)
@@ -116,7 +120,8 @@ public class ManualControlNode : MonoBehaviour
             new Vector3Msg(linear.x, linear.y, linear.z), new Vector3Msg(angular.x, angular.y, angular.z)
             );
         DroneControlMsg message = new DroneControlMsg(
-            twister
+            twister,
+			new Vector3Msg(rollSpeed, yawSpeed, throttleSpeed)
             );
         ros.Publish(topicName, message);
     }

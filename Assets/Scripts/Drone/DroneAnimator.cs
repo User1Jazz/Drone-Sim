@@ -8,6 +8,7 @@ public class DroneAnimator : MonoBehaviour
     [SerializeField] Transform droneMainTransform;
 
     // Rotation animation vars
+	public float maxRollAngle = 20f;
     float tiltAmountForward = 0f;
     float tiltVelocityForward = 0f;
 
@@ -33,8 +34,9 @@ public class DroneAnimator : MonoBehaviour
     
     void HandleRotation()
     {
-        tiltAmountForward = Mathf.SmoothDamp(tiltAmountForward, droneMainTransform.eulerAngles.x + 20 * droneControllerScript.linear.x, ref tiltVelocityForward, 0.1f);     // Calculate forward tilt
-        tiltAmountRight = Mathf.SmoothDamp(tiltAmountRight, droneMainTransform.eulerAngles.z + 20 * droneControllerScript.linear.y, ref tiltVelocityRight, 0.1f);           // Calculate side tilt
+		float angleAmount = maxRollAngle * ((droneControllerScript.rollSpeed / droneControllerScript.speedMultiplier) / droneControllerScript.maxRollSpeed);
+        tiltAmountForward = Mathf.SmoothDamp(tiltAmountForward, droneMainTransform.eulerAngles.x + angleAmount * droneControllerScript.linear.x, ref tiltVelocityForward, 0.1f);     // Calculate forward tilt
+        tiltAmountRight = Mathf.SmoothDamp(tiltAmountRight, droneMainTransform.eulerAngles.z + angleAmount * droneControllerScript.linear.y, ref tiltVelocityRight, 0.1f);           // Calculate side tilt
 
         yAxis = droneMainTransform.eulerAngles.y;																															// Get yaw
 

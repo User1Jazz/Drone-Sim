@@ -21,7 +21,10 @@ public class DistanceReward : RewardCalculator
 			if(collided)
 			{
 				CalculateReward();
-				gameObject.SetActive(false);
+				if(endOnCollision)
+				{
+					gameObject.SetActive(false);
+				}
 			}
 			timeRemaining -= Time.deltaTime;
 		}
