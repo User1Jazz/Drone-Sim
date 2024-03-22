@@ -11,7 +11,7 @@ public class WorldObject
     public Mesh mesh;                           // Mesh of the object (for visualisation and colision)
     public Material material;                   // Material of the object
     public Texture icon;                        // Icon of the object (for world editor visualisation)
-    public MonoScript script;                   // Script for the object (optional; Used if the object needs to perform some action)
+    //public MonoScript script;                   // Script for the object (optional; Used if the object needs to perform some action)
 
     // Editable in world editor only
     [HideInInspector] public Vector3 position;  // Position of the object in the world space
