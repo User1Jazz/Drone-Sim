@@ -19,12 +19,14 @@ public class RewardCalculator : MonoBehaviour
 	
 	public bool endOnCollision = true;
 	protected bool collided = false;
+	protected bool reachedFinish = false;
 	
 	// Runtime parameters
 	public Vector3 targetPosition;
 	protected Vector3 startPos;
 	public float timeRemaining;
 	public bool episodeOver = false;
+	public int droneID = 0;
 	
 	// Called on first frame update
 	void Start()
@@ -53,7 +55,7 @@ public class RewardCalculator : MonoBehaviour
 		}
 		else
 		{
-			Vector3 tgt = swarmManager.RequestNextTarget().position;
+			Vector3 tgt = swarmManager.RequestNextTarget(droneID).position;
 			targetPosition = tgt;
 			targetPublisher.targetPosition = targetPosition;
 		}
@@ -79,12 +81,26 @@ public class RewardCalculator : MonoBehaviour
 	
 	protected void OnCollisionEnter(Collision collision)
     {
-		collided = true;
+		if(collision.gameObject.tag == "Finish")
+		{
+			reachedFinish = true;
+			collided = false;
+		}else
+		{
+			collided = true;
+		}
     }
 	
 	protected void OnCollisionExit(Collision collision)
     {
-		collided = false;
+		if(collision.gameObject.tag == "Finish")
+		{
+			reachedFinish = true;
+			collided = false;
+		}else
+		{
+			collided = false;
+		}
     }
 	
 	public virtual void OnDrawGizmos()

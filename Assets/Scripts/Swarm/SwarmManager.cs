@@ -68,7 +68,7 @@ public class SwarmManager : MonoBehaviour
         {
             if (i < startPlatforms.Count)
             {
-                drones.Add(InitiateDrone("D" + i, startPlatforms[i]));
+                drones.Add(InitiateDrone(i, "D" + i, startPlatforms[i]));
 				session.drones.Add(drones[i]);
 				session.previousDroneStatus.Add(true);
             }
@@ -76,7 +76,7 @@ public class SwarmManager : MonoBehaviour
         Debug.Log("Swarm of size " + drones.Count + " deployed");
     }
 
-    GameObject InitiateDrone(string droneID, Transform startPlatform)
+    GameObject InitiateDrone(int droneNum, string droneID, Transform startPlatform)
     {
         Vector3 deployPosition = new Vector3(startPlatform.position.x, startPlatform.position.y + startPlatform.localScale.y + deployOffset, startPlatform.position.z);
         GameObject drone = Instantiate(dronePrefab, deployPosition, startPlatform.rotation);
@@ -96,13 +96,14 @@ public class SwarmManager : MonoBehaviour
 		if(targets.Count > 0)
 		{
 			// Handle target
-			Transform tgt = RequestNextTarget();
+			Transform tgt = RequestNextTarget(droneNum);
 			if(spawnTargetObject)
 			{
 				GameObject target = Instantiate(targetObject, tgt.position, Quaternion.identity, targetObjectsParent);
 				target.transform.localScale = new Vector3(targetMarkerSize+0.2f, targetMarkerSize+0.2f, targetMarkerSize+0.2f);
 			}
 			drone.GetComponent<DroneTargetPublisher>().targetPosition = tgt.position;
+			drone.GetComponent<RewardCalculator>().droneID = droneNum;
 			drone.GetComponent<RewardCalculator>().swarmManager = this;
 			drone.GetComponent<RewardCalculator>().generateTargetOnStart = false;
 			drone.GetComponent<RewardCalculator>().targetPosition = tgt.position;
@@ -120,9 +121,16 @@ public class SwarmManager : MonoBehaviour
         return drone;
     }
 	
-	public Transform RequestNextTarget()
+	public Transform RequestNextTarget(int droneID)
 	{
-		return targets[Random.Range(0,targets.Count-1)];
+		if(randomlyGetTargets)
+		{
+			return targets[Random.Range(0,targets.Count-1)];
+		}else
+		{
+			return targets[droneID];
+		}
+		
 	}
 	
 	public void RedeploySwarm()

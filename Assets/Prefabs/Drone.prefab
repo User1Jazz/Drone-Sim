@@ -1,5 +1,94 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7759064034644468593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8766005355564248347}
+  - component: {fileID: 3738806533012594717}
+  - component: {fileID: 6169154717851401946}
+  m_Layer: 0
+  m_Name: DroneCameraSimOutput
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8766005355564248347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759064034644468593}
+  m_LocalRotation: {x: 0.052335896, y: 0, z: 0, w: 0.9986295}
+  m_LocalPosition: {x: 0, y: -0.00066, z: 0.02253}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8637418141085670337}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 6, y: 0, z: 0}
+--- !u!20 &3738806533012594717
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759064034644468593}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.01
+  far clip plane: 7
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 2
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!114 &6169154717851401946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759064034644468593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb2c58b2e6c47f3418128d84a44560ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invertColor: 1
 --- !u!1 &8086203596014696238
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,6 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2c58b2e6c47f3418128d84a44560ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invertColor: 1
 --- !u!1 &8094375305740979242
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +228,7 @@ GameObject:
   - component: {fileID: 2740525799620944796}
   - component: {fileID: 5338470859072853454}
   - component: {fileID: 3576977860219999105}
-  - component: {fileID: 8377244053573608500}
+  - component: {fileID: 1690978114620115811}
   - component: {fileID: 5125291584198904269}
   m_Layer: 0
   m_Name: Drone
@@ -177,7 +267,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!65 &8094375305740979250
 BoxCollider:
@@ -206,13 +296,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linear: {x: 0, y: 0, z: 0}
   angular: {x: 0, y: 0, z: 0}
-  maxYawSpeed: 9
-  maxThrottleSpeed: 5
-  maxRollSpeed: 9
+  maxYawSpeed: 15
+  maxThrottleSpeed: 15
+  maxRollSpeed: 15
   yawSpeed: 5
   throttleSpeed: 5
   rollSpeed: 5
-  speedMultiplier: 10
+  speedMultiplier: 1
 --- !u!114 &6363175317022082813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +385,7 @@ MonoBehaviour:
   imu: {fileID: 3391125806404709752}
   ir: {fileID: 968146912053103772}
   droneCam: {fileID: 1221578946994107643}
-  rewardCalculator: {fileID: 8377244053573608500}
+  rewardCalculator: {fileID: 1690978114620115811}
   initializeOnStart: 0
 --- !u!114 &5338470859072853454
 MonoBehaviour:
@@ -313,7 +403,7 @@ MonoBehaviour:
   publishMessageFrequency: 0.05
   initializeOnStart: 0
   reward: 0
-  rewardCalc: {fileID: 8377244053573608500}
+  rewardCalc: {fileID: 1690978114620115811}
 --- !u!114 &3576977860219999105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,10 +421,10 @@ MonoBehaviour:
   manualMode: 1
   started: 0
   initializeOnStart: 0
-  rollSpeed: 9
-  yawSpeed: 9
+  rollSpeed: 10
+  yawSpeed: 12
   throttleSpeed: 5
---- !u!114 &8377244053573608500
+--- !u!114 &1690978114620115811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -343,7 +433,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8094375305740979242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 576432d87bb24434f82e07fb77cebb80, type: 3}
+  m_Script: {fileID: 11500000, guid: e861cd0cb56a567408256301055422f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetPosMin: {x: -25, y: 5, z: -25}
@@ -365,6 +455,7 @@ MonoBehaviour:
   successRadius: 1
   idleTimeout: 0.5
   punishOnTimeout: 0
+  axis: 2
 --- !u!114 &5125291584198904269
 MonoBehaviour:
   m_ObjectHideFlags: 0

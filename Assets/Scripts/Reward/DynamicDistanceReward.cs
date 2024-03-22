@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DistanceReward : RewardCalculator
+public class DynamicDistanceReward : RewardCalculator
 {
 	public float successRadius = 2f;
 	private Vector3 previousPosition = Vector3.zero;
@@ -11,6 +11,8 @@ public class DistanceReward : RewardCalculator
 	float positionTimeElapsed = 0f;
 	float pokeTimeElapsed = 0f;
 	public bool punishOnTimeout = false;
+	public enum Axis {X, Y, Z};
+	public Axis axis = Axis.X;
 	
 	
 	// Called every frame update
@@ -83,28 +85,7 @@ public class DistanceReward : RewardCalculator
 			{
 				return failureReward * rewardScale;
 			}
-			// If still on the start position, have no mercy. Punish the hell out of it!
-			if(Vector3.Distance(startPos, transform.position) < 0.1f)
-			{
-				return failureReward * rewardScale;
-			}
-			// If within the radius of a circle where target is in the center and the start position is at the edge
-			if(Vector3.Distance(targetPosition, transform.position) <= Vector3.Distance(targetPosition, startPos))
-			{
-				// To encourage the agent to move around (the 'poke' reward [i.e. punishment])
-				if(Vector3.Distance(transform.position, pokePosition) <= 0.1f)
-				{
-					return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * failureReward * rewardScale;
-				}
-				// currentDist / startDist * successReward
-				return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward * rewardScale;
-			}
-			// If outside the circle, receive punishment reward
-			else
-			{
-				// currentDist / startDist * failureReward
-				return (1f - Vector3.Distance(transform.position, targetPosition) / Vector3.Distance(startPos, targetPosition)) * -failureReward * rewardScale;
-			}
+			return GetAxisReward(axis);
 		}
 		// Get punishment on timeout
 		else if (punishOnTimeout)
@@ -118,27 +99,61 @@ public class DistanceReward : RewardCalculator
 			{
 				return failureReward * rewardScale;
 			}
-			// If still on the start position, have no mercy. Punish the hell out of it!
-			if(Vector3.Distance(startPos, transform.position) < 0.1f)
+			return GetAxisReward(axis);
+		}
+	}
+	
+	public float GetAxisReward(Axis _axis)
+	{
+		float target = 0f;
+		float drone = 0f;
+		float reference = 0f;
+		if(_axis == Axis.X)
+		{
+			target = targetPosition.x;
+			drone = transform.position.x;
+			reference = pokePosition.x;
+		}
+		else if(_axis == Axis.Y)
+		{
+			target = targetPosition.y;
+			drone = transform.position.y;
+			reference = pokePosition.y;
+		}
+		else
+		{
+			target = targetPosition.z;
+			drone = transform.position.z;
+			reference = pokePosition.z;
+		}
+		if(reference > target)
+		{
+			if(drone < reference)
+			{
+				return successReward * rewardScale;
+			}
+			else if(drone > reference)
 			{
 				return failureReward * rewardScale;
 			}
-			// If within the radius of a circle where target is in the center and the start position is at the edge
-			if(Vector3.Distance(targetPosition, transform.position) <= Vector3.Distance(targetPosition, startPos))
-			{
-				// To encourage the agent to move around (the 'poke' reward [i.e. punishment])
-				if(Vector3.Distance(transform.position, pokePosition) <= 0.1f)
-				{
-					return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * failureReward * rewardScale;
-				}
-				// currentDist / startDist * successReward
-				return (1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward * rewardScale;
-			}
-			// If outside the circle, receive punishment reward
 			else
 			{
-				// currentDist / startDist * failureReward
-				return (1f - Vector3.Distance(transform.position, targetPosition) / Vector3.Distance(startPos, targetPosition)) * -failureReward * rewardScale;
+				return 0.0f;
+			}
+		}
+		else
+		{
+			if(drone > reference)
+			{
+				return successReward * rewardScale;
+			}
+			else if(drone < reference)
+			{
+				return failureReward * rewardScale;
+			}
+			else
+			{
+				return 0.0f;
 			}
 		}
 	}
