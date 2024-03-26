@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8766005355564248347
 Transform:
   m_ObjectHideFlags: 0
@@ -452,8 +452,9 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0, z: 0}
   timeRemaining: 0
   episodeOver: 0
+  droneID: 0
   successRadius: 1
-  idleTimeout: 0.5
+  idleTimeout: 0.1
   punishOnTimeout: 0
   axis: 2
 --- !u!114 &5125291584198904269

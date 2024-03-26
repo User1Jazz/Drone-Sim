@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DynamicDistanceReward : RewardCalculator
 {
@@ -36,7 +37,7 @@ public class DynamicDistanceReward : RewardCalculator
 		}
 		
 		positionTimeElapsed += Time.deltaTime;
-		if(positionTimeElapsed > ((idleTimeout+0.5f)/idleTimeout))
+		if(positionTimeElapsed > idleTimeout)
 		{
 			previousPosition = transform.position;
 			positionTimeElapsed = 0f;
@@ -130,7 +131,7 @@ public class DynamicDistanceReward : RewardCalculator
 		{
 			if(drone < reference)
 			{
-				return successReward * rewardScale;
+				return Math.Abs((1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward * rewardScale);
 			}
 			else if(drone > reference)
 			{
@@ -145,7 +146,7 @@ public class DynamicDistanceReward : RewardCalculator
 		{
 			if(drone > reference)
 			{
-				return successReward * rewardScale;
+				return Math.Abs((1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward * rewardScale);
 			}
 			else if(drone < reference)
 			{
