@@ -13,6 +13,7 @@ public class RewardCalculator : MonoBehaviour
 	public float episodeLifetime = 60f;
 	public float gainTimeOnSuccess = 1f;
 	public DroneTargetPublisher targetPublisher;
+	public RewardPublisher rewardPublisherScript;
 	
 	public SwarmManager swarmManager;
 	public Session session;
@@ -62,10 +63,12 @@ public class RewardCalculator : MonoBehaviour
 		
 	}
 	
-	public void Reset()
+	public virtual void Reset()
 	{
 		ResetTimer();
 		collided = false;
+		reachedFinish = false;
+		rewardPublisherScript.GetReward();
 	}
 	
 	public void ResetTimer()
@@ -89,18 +92,23 @@ public class RewardCalculator : MonoBehaviour
 		{
 			collided = true;
 		}
+		//CalculateReward();
+		rewardPublisherScript.GetReward();
+		rewardPublisherScript.PublishData();
     }
 	
 	protected void OnCollisionExit(Collision collision)
     {
 		if(collision.gameObject.tag == "Finish")
 		{
-			reachedFinish = true;
 			collided = false;
 		}else
 		{
 			collided = false;
 		}
+		//CalculateReward();
+		rewardPublisherScript.GetReward();
+		rewardPublisherScript.PublishData();
     }
 	
 	public virtual void OnDrawGizmos()

@@ -42,7 +42,7 @@ public class RewardPublisher : MonoBehaviour
         }
     }
 	
-	void GetReward()
+	public void GetReward()
 	{
 		reward = rewardCalc.CalculateReward();
 	}
@@ -53,7 +53,7 @@ public class RewardPublisher : MonoBehaviour
         ros.RegisterPublisher<Float32Msg>(topicName);
     }
 
-    void PublishData()
+    public void PublishData()
     {
         Float32Msg message = new Float32Msg(reward);
 

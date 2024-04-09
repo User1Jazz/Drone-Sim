@@ -57,6 +57,11 @@ public class SessionInfoPublisher : MonoBehaviour
 			{
 				ros.RegisterPublisher<DroneStatusMsg>("/" + drone.name + "/" + droneStatusTopicName);
 			}
+			// Publish each drone status
+			for(int i = 0; i < sessionScript.drones.Count; i++)
+			{
+				PublishDroneStatus(i, true);
+			}
 			initialised = true;
 		}
     }
@@ -70,10 +75,10 @@ public class SessionInfoPublisher : MonoBehaviour
     }
 	
 	// Function to publish specific drone status (whether its gameobject is active or not)
-	void PublishDroneStatus(int droneIndex)
+	void PublishDroneStatus(int droneIndex, bool forcePublish = false)
 	{
 		// Make sure that the drone does not receive the same status multiple times
-		if(sessionScript.previousDroneStatus[droneIndex] != sessionScript.drones[droneIndex].activeSelf)
+		if(sessionScript.previousDroneStatus[droneIndex] != sessionScript.drones[droneIndex].activeSelf || forcePublish)
 		{
 			Debug.Log("Sending drone status");
 			string topName = "/" + sessionScript.drones[droneIndex].name + "/" + droneStatusTopicName;

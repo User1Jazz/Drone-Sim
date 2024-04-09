@@ -21,7 +21,7 @@ public class DynamicDistanceReward : RewardCalculator
 	{
 		if(timeRemaining > 0f)
 		{
-			if(collided)
+			if(collided || reachedFinish)
 			{
 				CalculateReward();
 				if(endOnCollision)
@@ -62,6 +62,16 @@ public class DynamicDistanceReward : RewardCalculator
 			}
 			
 		}
+	}
+	
+	public override void Reset()
+	{
+		ResetTimer();
+		collided = false;
+		reachedFinish = false;
+		pokePosition = transform.position;
+		previousPosition = transform.position;
+		rewardPublisherScript.GetReward();
 	}
 	
 	// Function to calculate the reward
@@ -135,7 +145,7 @@ public class DynamicDistanceReward : RewardCalculator
 			}
 			else if(drone > reference)
 			{
-				return failureReward * rewardScale;
+				return -Math.Abs((1f - Vector3.Distance(pokePosition, transform.position))*0.5f * successReward * rewardScale); //-Math.Abs((1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward * rewardScale);
 			}
 			else
 			{
@@ -150,7 +160,7 @@ public class DynamicDistanceReward : RewardCalculator
 			}
 			else if(drone < reference)
 			{
-				return failureReward * rewardScale;
+				return -Math.Abs((1f - Vector3.Distance(pokePosition, transform.position))*0.5f * successReward * rewardScale); //-Math.Abs((1f - Vector3.Distance(targetPosition, transform.position) / Vector3.Distance(targetPosition, startPos)) * successReward * rewardScale);
 			}
 			else
 			{

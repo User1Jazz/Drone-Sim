@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8766005355564248347
 Transform:
   m_ObjectHideFlags: 0
@@ -446,6 +446,7 @@ MonoBehaviour:
   episodeLifetime: 60
   gainTimeOnSuccess: 1
   targetPublisher: {fileID: 5125291584198904269}
+  rewardPublisherScript: {fileID: 5338470859072853454}
   swarmManager: {fileID: 0}
   session: {fileID: 0}
   endOnCollision: 1
