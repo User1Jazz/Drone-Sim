@@ -28,6 +28,7 @@ public class IMU : MonoBehaviour
 	
 	void Start()
 	{
+		start_pos = transform.position;
 		world_position = transform.position;
 		local_position = Vector3.zero;
 	}
